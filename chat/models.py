@@ -43,7 +43,7 @@ class Message(models.Model):
             return f"{self.sender.username} in {self.room.name} at {self.created_at}: {self.content[:30]}"
 
     class Meta:
-        """Meta options for Room model."""
+        """Meta options for Message model."""
         ordering = ["-created_at"]
         verbose_name = "Message"
         verbose_name_plural = "Messages"
