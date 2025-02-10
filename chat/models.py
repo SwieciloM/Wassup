@@ -28,16 +28,16 @@ class Message(models.Model):
     room = models.ForeignKey("Room", on_delete=models.CASCADE, related_name="messages")
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_messages")
     content = models.TextField(blank=True, null=True)
-    image_blob = models.BinaryField(blank=True, null=True)
+    image = models.ImageField(upload_to='message_images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        if not self.content and not self.image_blob:
+        if not self.content and not self.image:
             raise ValueError("Message must contain text or image.")
         super().save(*args, **kwargs)
 
     def __str__(self):
-        if self.image_blob:
+        if self.image:
             return f"User '{self.sender.username}' in room '{self.room.name}' at {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}: [image]"
         else:
             return f"User '{self.sender.username}' in room '{self.room.name}' at {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}: {self.content[:15]}"
