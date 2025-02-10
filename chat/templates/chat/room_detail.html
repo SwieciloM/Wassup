@@ -8,16 +8,19 @@
   {% for message in messages %}
     <div style="margin-bottom: 1em;">
       <strong>{{ message.sender.username }}:</strong>
-      {% if message.image_blob %}
-        <!-- Show text if available, plus an image below -->
+      {% if message.image %}
+        <!-- If there's an image, show it -->
         {{ message.content }}
         <br>
-        <img 
-          src="data:image/png;base64,{{ message.image_blob }}" 
-          alt="Image from {{ message.sender.username }}" 
-          style="max-width: 200px;"
-        />
+        <a href="{{ message.image.url }}" target="_blank">
+            <img 
+              src="{{ message.image.url }}" 
+              alt="Image from {{ message.sender.username }}" 
+              style="max-width: 200px;"
+            />
+          </a>
       {% else %}
+        <!-- Otherwise, just show the text -->
         {{ message.content }}
       {% endif %}
       <br>
@@ -38,9 +41,9 @@
   </p>
 
   <p>
-    {{ message_form.uploaded_image.label_tag }}<br>
-    {{ message_form.uploaded_image }}
-    {{ message_form.uploaded_image.errors }}
+    {{ message_form.image.label_tag }}<br>
+    {{ message_form.image }}
+    {{ message_form.image.errors }}
   </p>
 
   <button type="submit">Send</button>
