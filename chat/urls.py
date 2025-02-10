@@ -3,7 +3,7 @@ from .views import RoomListView, RoomDetailView, RoomCreateView, RoomToogleFavou
 
 urlpatterns = [
     path('', RoomListView.as_view(), name='home'),
-    path('chat-room/<int:pk>/', RoomDetailView.as_view(), name='chat-room'),
+    path('room/<int:pk>/', RoomDetailView.as_view(), name='room'),
     path('room-create/', RoomCreateView.as_view(), name='room-create'),
     path('room-update/<int:pk>/', RoomUpdateView.as_view(), name='room-update'),
     path('room-delete/<int:pk>/', RoomDeleteView.as_view(), name='room-delete'),
