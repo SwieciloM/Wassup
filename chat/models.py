@@ -38,9 +38,9 @@ class Message(models.Model):
 
     def __str__(self):
         if self.image_blob:
-            return f"{self.sender.username} in {self.room.name} at {self.created_at}: [image]"
+            return f"User '{self.sender.username}' in room '{self.room.name}' at {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}: [image]"
         else:
-            return f"{self.sender.username} in {self.room.name} at {self.created_at}: {self.content[:30]}"
+            return f"User '{self.sender.username}' in room '{self.room.name}' at {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}: {self.content[:15]}"
 
     class Meta:
         """Meta options for Message model."""
