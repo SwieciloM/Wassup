@@ -1,51 +1,64 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block main_content %}
+{% block content %}
 <h1>{{ room.name }}</h1>
 
-<!-- Display messages -->
-<div>
+<!-- Miejsce na wyświetlane wiadomości -->
+<div id="chat-log">
   {% for message in messages %}
-    <div style="margin-bottom: 1em;">
-      <strong>{{ message.sender.username }}:</strong>
-      {% if message.image %}
-        <!-- If there's an image, show it -->
-        {{ message.content }}
-        <br>
-        <a href="{{ message.image.url }}" target="_blank">
-            <img 
-              src="{{ message.image.url }}" 
-              alt="Image from {{ message.sender.username }}" 
-              style="max-width: 200px;"
-            />
-          </a>
-      {% else %}
-        <!-- Otherwise, just show the text -->
-        {{ message.content }}
-      {% endif %}
-      <br>
-      <small>{{ message.created_at|date:"d M Y H:i" }}</small>
-    </div>
+    <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}</p>
   {% endfor %}
 </div>
 
-<!-- Message form -->
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ message_form.non_field_errors }}
+<!-- Pole tekstowe i przycisk do wysyłania nowej wiadomości -->
+<input id="chat-message-input" type="text" placeholder="Wpisz wiadomość...">
+<button id="chat-message-send">Wyślij</button>
 
-  <p>
-    {{ message_form.content.label_tag }}<br>
-    {{ message_form.content }}
-    {{ message_form.content.errors }}
-  </p>
+<!-- Tu wkleimy skrypt do obsługi WebSocketa -->
+<script>
+  // 1. Odczyt ID pokoju:
+  const roomId = "{{ room.id }}";
 
-  <p>
-    {{ message_form.image.label_tag }}<br>
-    {{ message_form.image }}
-    {{ message_form.image.errors }}
-  </p>
+  // 2. Wyznaczenie protokołu (ws:// lub wss://), w zależności od HTTP/HTTPS
+  const protocol = (window.location.protocol === "https:") ? "wss" : "ws";
 
-  <button type="submit">Send</button>
-</form>
+  // 3. Tworzenie połączenia WebSocket z serwerem Channels
+  const chatSocket = new WebSocket(
+      protocol + '://' + window.location.host + '/ws/room/' + roomId + '/'
+  );
+
+  // 4. Obsługa zdarzeń WebSocket
+  chatSocket.onmessage = function(e) {
+      // Serwer wysłał nową wiadomość do wszystkich w pokoju
+      const data = JSON.parse(e.data);
+
+      const chatLog = document.getElementById('chat-log');
+      const newMessage = document.createElement('p');
+      newMessage.innerHTML = `<strong>${data.sender}:</strong> ${data.message}`;
+      chatLog.appendChild(newMessage);
+  };
+
+  chatSocket.onclose = function(e) {
+      console.error('Socket zamknięty nieoczekiwanie');
+  };
+
+  // 5. Wysyłanie wiadomości po kliknięciu w przycisk
+  const sendButton = document.getElementById('chat-message-send');
+  const messageInput = document.getElementById('chat-message-input');
+
+  sendButton.addEventListener('click', function() {
+      const message = messageInput.value;
+      chatSocket.send(JSON.stringify({
+          'message': message
+      }));
+      messageInput.value = ''; // wyczyść pole po wysłaniu
+  });
+
+  // 6. (Opcjonalnie) Wyślij wiadomość klawiszem Enter
+  messageInput.addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {  // Enter
+          sendButton.click();
+      }
+  });
+</script>
 {% endblock %}
