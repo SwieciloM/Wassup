@@ -13,13 +13,12 @@ from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
 from chat.routing import websocket_urlpatterns
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wassup.settings')
 
-application = get_asgi_application()
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wassup.settings')
 
 application = ProtocolTypeRouter({
     # Handle traditional HTTP requests with Django
-    "http": django_asgi_app,
+    "http": get_asgi_application(),
 
     # Handle WebSocket requests with Channels
     "websocket": AuthMiddlewareStack(

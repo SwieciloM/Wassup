@@ -1,12 +1,31 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block main_content %}
 <h1>{{ room.name }}</h1>
 
 <!-- Miejsce na wyświetlane wiadomości -->
 <div id="chat-log">
-  {% for message in messages %}
-    <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}</p>
+    {% for message in messages %}
+    <div style="margin-bottom: 1em;">
+      <strong>{{ message.sender.username }}:</strong>
+      {% if message.image %}
+        <!-- If there's an image, show it -->
+        {{ message.content }}
+        <br>
+        <a href="{{ message.image.url }}" target="_blank">
+            <img 
+              src="{{ message.image.url }}" 
+              alt="Image from {{ message.sender.username }}" 
+              style="max-width: 200px;"
+            />
+          </a>
+      {% else %}
+        <!-- Otherwise, just show the text -->
+        {{ message.content }}
+      {% endif %}
+      <br>
+      <small>{{ message.created_at|date:"d M Y H:i" }}</small>
+    </div>
   {% endfor %}
 </div>
 
@@ -24,7 +43,7 @@
 
   // 3. Tworzenie połączenia WebSocket z serwerem Channels
   const chatSocket = new WebSocket(
-      protocol + '://' + window.location.host + '/ws/room/' + roomId + '/'
+      protocol + '://' + window.location.host + '/ws/' + roomId + '/'
   );
 
   // 4. Obsługa zdarzeń WebSocket
