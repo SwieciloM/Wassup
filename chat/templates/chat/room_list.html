@@ -10,7 +10,13 @@
     <table>
         {% for room in connected_rooms %}
             <tr>
-                <td><a href="{% url 'room' room.id %}">{{ room.name }}</a></td>
+                <td><a href="{% url 'room' room.id %}">{{ room.name }} 
+                {% if request.user == room.owner %}
+                    (owner)
+                {% else %}
+                    (guest)
+                {% endif %}
+                </a></td>
             </tr>
         {% endfor %}
     </table>
