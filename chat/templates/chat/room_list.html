@@ -2,6 +2,7 @@
 
 {% block main_content %}
 <h1>Home page with rooms list</h1>
+<h1>Welcome {{request.user|title}}!</h1>
 <a href="{% url 'room-create' %}">Add Room</a>
 <table>
     <tr>
