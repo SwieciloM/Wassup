@@ -2,18 +2,32 @@
 
 {% block main_content %}
 <h1>Home page with rooms list</h1>
-<h1>Welcome {{request.user|title}}!</h1>
+<h1>Welcome {{ request.user|title }}!</h1>
 <a href="{% url 'room-create' %}">Add Room</a>
-<table>
-    <tr>
-        <th>Item</th>
-    </tr>
-    {% for room in rooms %}
-        <tr>
-            <td><a href="{% url 'room' room.id %}">{{room.name}}</a></td>
-        </tr>
-    {% empty %}
-        <h3>No items in list</h3>
-    {% endfor %}
-</table>
+
+<h3>Connected rooms:</h3>
+{% if connected_rooms %}
+    <table>
+        {% for room in connected_rooms %}
+            <tr>
+                <td><a href="{% url 'room' room.id %}">{{ room.name }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h3>No connected rooms</h3>
+{% endif %}
+
+<h3>Public rooms:</h3>
+{% if public_rooms %}
+    <table>
+        {% for room in public_rooms %}
+            <tr>
+                <td><a href="{% url 'room' room.id %}">{{ room.name }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <h3>No public rooms</h3>
+{% endif %}
 {% endblock %}

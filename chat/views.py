@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.db.models import Q
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -18,14 +19,29 @@ class RoomListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         """Adds filtered rooms to the context."""
         context = super().get_context_data(**kwargs)
-        context['rooms'] = context['rooms'].filter(owner=self.request.user)
-
+        
+        # Rooms the user is connected to (owner or guest)
+        connected_rooms = Room.objects.filter(
+            Q(owner=self.request.user) | Q(guests=self.request.user)
+        ).distinct()
+        
+        # Public rooms that the user is not connected to
+        public_rooms = Room.objects.filter(is_publicly_visible=True).exclude(
+            id__in=connected_rooms.values_list('id', flat=True)
+        ).distinct()
+        
+        context['connected_rooms'] = connected_rooms
+        context['public_rooms'] = public_rooms
         return context
 
 
 class RoomDetailView(LoginRequiredMixin, DetailView):
     model = Room
     context_object_name = 'room'
+
+    def get_queryset(self):
+        """Only return lobby owned by the current user."""
+        return Room.objects.filter(Q(owner=self.request.user) | Q(guests=self.request.user)).distinct()
 
     def get_context_data(self, **kwargs):
         """
