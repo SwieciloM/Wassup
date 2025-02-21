@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +8,22 @@
     <link rel="icon" type="image/x-icon" href="{% static 'favicons/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-
 <body>
-    <div>
-        {% block main_content %}
+    <header class="navbar">
+        <div class="navbar-left">
+            <h1><a href="{% url 'home' %}">Wassup</a></h1>
+        </div>
+        <div class="navbar-right">
+            {% if user.is_authenticated %}
+                <span class="username">Hello, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="logout-button">Logout</a>
+            {% endif %}
+        </div>
+    </header>
 
+    <div class="content">
+        {% block main_content %}
         {% endblock %}
     </div>
 </body>
-
 </html>

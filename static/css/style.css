@@ -1,0 +1,74 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'RobotoVariable';
+    src: url('../fonts/roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900; 
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RobotoVariable';
+    src: url('../fonts/roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+body {
+    font-family: 'RobotoVariable', sans-serif;
+    background-color: #2C2C2C;
+    color: #FFFFFF;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #444444;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #666666;
+}
+
+.navbar a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.navbar-left h1 {
+    margin: 0;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.logout-button {
+    background-color: #444444;
+    padding: 8px 15px;          /* updated padding */
+    border: none;
+    border-radius: 4px;         /* slightly less rounded */
+    color: #FFFFFF;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e04343;
+}
+
+/* Content area to separate page content from the navbar */
+.content {
+    padding: 20px;
+}
