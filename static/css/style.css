@@ -72,3 +72,89 @@ body {
 .content {
     padding: 20px;
 }
+/* Center the chat interface */
+.chat-wrapper {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+  }
+  
+  /* Rounded container style */
+  .rounded {
+    border-radius: 10px;
+    background-color: #333333;
+    padding: 15px;
+    margin-bottom: 20px;
+    position: relative; /* Necessary for absolute positioning inside */
+  }
+  
+  /* Header container styling */
+  .chat-header {
+    text-align: center;
+    position: relative; /* For absolute positioning of the edit icon */
+  }
+
+  /* Increase the size of the room name */
+  .chat-header h1 {
+    font-size: 2em; /* Larger than default h1 size if desired */
+    margin: 0;
+  }
+  
+  /* Participants info styling */
+  .chat-header .participants {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #cccccc;
+  }
+  
+ /* Edit button styled as a gear icon */
+  .edit-room {
+    position: absolute;
+    top: 15px;      /* Align with the container's padding */
+    right: 30px;    /* Align with the container's horizontal padding */
+    background-color: transparent; /* Remove background for a minimalist icon look */
+    font-size: 1.8em;  /* Increase icon size */
+    color: #ff4d4d;    /* Use a contrasting color for visibility */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .edit-room:hover {
+    color: #e04343;
+  }
+  
+  /* Messages container styling */
+  .chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  /* Input container styling */
+  .chat-input {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .chat-input input[type="text"] {
+    flex: 1;
+    padding: 8px;
+  }
+  
+  .chat-input input[type="file"] {
+    padding: 8px;
+  }
+  
+  .chat-input button {
+    padding: 8px 15px;
+    background-color: #ff4d4d;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .chat-input button:hover {
+    background-color: #e04343;
+  }
+  
