@@ -122,11 +122,46 @@ body {
   .edit-room:hover {
     color: #e04343;
   }
-  
-  /* Messages container styling */
+
+  /* Messages Container */
   .chat-messages {
     max-height: 400px;
     overflow-y: auto;
+  }
+  
+  /* Chat Bubble Styles with Box Shadow */
+  .chat-message {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+  }
+
+  /* Differentiating Sent and Received Messages */
+  .chat-message.sent {
+    background-color: #4a90e2; /* Color for messages sent by the user */
+    margin-left: auto;
+    text-align: right;
+  }
+  .chat-message.received {
+    background-color: #3a3a3a; /* Color for messages from others */
+    margin-right: auto;
+    text-align: left;
+  }
+  
+  /* Enhance Sender Name and Timestamp Styling */
+  .chat-message strong {
+    color: #FFD700;
+    font-size: 1.1em;
+  }
+  .chat-message small {
+    display: block;
+    color: #AAAAAA;
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 5px;
   }
   
   /* Input container styling */

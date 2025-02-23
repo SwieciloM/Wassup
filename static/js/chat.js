@@ -1,14 +1,15 @@
-// Wait until the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Retrieve the room id from the data attribute
+    // Retrieve the room id and current user from data attributes
     const chatData = document.getElementById('chat-data');
     const roomId = chatData ? chatData.dataset.roomId : null;
+    const currentUserElem = document.getElementById('current-user');
+    const currentUser = currentUserElem ? currentUserElem.dataset.username : '';
+
     if (!roomId) {
         console.error('Room ID not found.');
         return;
     }
 
-    // Set up the WebSocket connection using the dynamic roomId
     const protocol = (window.location.protocol === "https:") ? "wss" : "ws";
     const chatSocket = new WebSocket(
         protocol + '://' + window.location.host + '/ws/' + roomId + '/'
@@ -18,25 +19,35 @@ document.addEventListener('DOMContentLoaded', function() {
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
         const chatLog = document.getElementById('chat-log');
-        const newMessage = document.createElement('p');
+        // Create a new div for the message
+        const newMessage = document.createElement('div');
+        // Determine message type
+        const messageType = (data.sender === currentUser) ? 'sent' : 'received';
+        newMessage.classList.add('chat-message', messageType);
 
-        // If an image URL is included, display it.
+        // Build message content
+        let htmlContent = `<strong>${data.sender}:</strong><br>`;
+        htmlContent += `${data.message}`;
         if (data.image_url) {
-            newMessage.innerHTML = `<strong>${data.sender}:</strong> ${data.message} <br>
-                <a href="${data.image_url}" target="_blank">
-                    <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
+            htmlContent += `<br><a href="${data.image_url}" target="_blank">
+                <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
                 </a>`;
-        } else {
-            newMessage.innerHTML = `<strong>${data.sender}:</strong> ${data.message}`;
         }
+        // Convert timestamp to a readable format if needed
+        // Here we simply output the raw ISO string. Adjust as needed.
+        htmlContent += `<br><small>${data.timestamp}</small>`;
+        newMessage.innerHTML = htmlContent;
+
         chatLog.appendChild(newMessage);
+
+        // Auto-scroll: set scrollTop to the height of the container
+        chatLog.scrollTop = chatLog.scrollHeight;
     };
 
     chatSocket.onclose = function(e) {
         console.error('Socket closed unexpectedly');
     };
 
-    // Sending messages (with or without an image)
     const sendButton = document.getElementById('chat-message-send');
     const messageInput = document.getElementById('chat-message-input');
     const imageInput = document.getElementById('chat-image-input');
@@ -45,16 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = messageInput.value;
         const file = imageInput.files[0];
 
-        // If a file is selected, convert it to a Base64 data URL.
         if (file) {
             const reader = new FileReader();
             reader.onload = function() {
-                const imageData = reader.result; // Data URL string
+                const imageData = reader.result;
                 chatSocket.send(JSON.stringify({
                     'message': message,
                     'image': imageData
                 }));
-                // Clear inputs after sending.
                 messageInput.value = '';
                 imageInput.value = '';
             };
@@ -67,9 +76,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Allow sending the message with the Enter key.
     messageInput.addEventListener('keyup', function(event) {
-        if (event.keyCode === 13) {  // 13 is the Enter key
+        if (event.keyCode === 13) {
             sendButton.click();
         }
     });
