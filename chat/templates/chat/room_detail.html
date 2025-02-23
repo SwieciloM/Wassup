@@ -25,6 +25,11 @@
     <!-- 2. Messages Container -->
     <div class="chat-messages rounded" id="chat-log">
       {% for message in messages %}
+        {% ifchanged message.created_at|date:"d.m.Y" %}
+        <div class="date-separator">{{ message.created_at|date:"d.m.Y" }}</div>
+        {% endifchanged %}
+    
+      
       <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
         <strong class="sender">{{ message.sender.username }}</strong>
         <div class="message-body">
@@ -43,6 +48,7 @@
         </div>
       </div>
       {% endfor %}
+    
     </div>
   
     <!-- 3. Input Container -->

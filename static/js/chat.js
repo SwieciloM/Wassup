@@ -15,17 +15,18 @@ document.addEventListener('DOMContentLoaded', function() {
         protocol + '://' + window.location.host + '/ws/' + roomId + '/'
     );
 
+    // Initialize lastMessageDate from the last date separator in the HTML (if any)
+    const chatLog = document.getElementById('chat-log');
+    const dateSeparators = chatLog.querySelectorAll('.date-separator');
+    let lastMessageDate = dateSeparators.length > 0 
+    ? dateSeparators[dateSeparators.length - 1].innerText.trim() 
+    : "";
+
     // Listen for messages from the server.
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
-        const chatLog = document.getElementById('chat-log');
-        // Create a new div for the message
-        const newMessage = document.createElement('div');
-        // Determine message type: 'sent' or 'received'
-        const messageType = (data.sender === currentUser) ? 'sent' : 'received';
-        newMessage.classList.add('chat-message', messageType);
 
-        // Format timestamp as hh:mm
+        // Create a Date object from the timestamp and format time as hh:mm
         const timestampDate = new Date(data.timestamp);
         let hours = timestampDate.getHours();
         let minutes = timestampDate.getMinutes();
@@ -34,13 +35,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const formattedTime = `${hours}:${minutes}`;
 
+        // Format the full date string as "D, d.m.Y" (e.g., "Sun, 23.02.2025")
+        const formattedDate = timestampDate.toLocaleDateString(undefined, {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        }).replace(/\//g, '.'); // Replace any slashes with dots if needed
+
+        // If the date changes from the last message, insert a date separator.
+        if (lastMessageDate !== formattedDate) {
+            const dateSeparator = document.createElement('div');
+            dateSeparator.classList.add('date-separator');
+            dateSeparator.innerText = formattedDate;
+            chatLog.appendChild(dateSeparator);
+            lastMessageDate = formattedDate;
+        }
+
+        // Create a new div for the message
+        const newMessage = document.createElement('div');
+        const messageType = (data.sender === currentUser) ? 'sent' : 'received';
+        newMessage.classList.add('chat-message', messageType);
+
         // Build the new HTML structure:
+        // Sender's name on top and then a flex container with message content and timestamp.
         let htmlContent = `<strong class="sender">${data.sender}</strong>`;
         htmlContent += `<div class="message-body">`;
         htmlContent += `<div class="message-content">${data.message}`;
         if (data.image_url) {
             htmlContent += `<br><a href="${data.image_url}" target="_blank">
-                                <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
+                              <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
                             </a>`;
         }
         htmlContent += `</div>`;
@@ -91,4 +114,12 @@ document.addEventListener('DOMContentLoaded', function() {
             sendButton.click();
         }
     });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Scroll chat log to the bottom on page load
+    const chatLog = document.getElementById('chat-log');
+    if (chatLog) {
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
 });

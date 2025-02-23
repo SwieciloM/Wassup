@@ -216,3 +216,29 @@ body {
 .chat-input button:hover {
   background-color: #e04343;
 }
+
+.date-separator {
+  text-align: center;
+  color: #cccccc;
+  margin: 10px 0;
+  font-size: 0.9em;
+  position: relative;
+}
+
+.date-separator::before,
+.date-separator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background-color: #666666;
+}
+
+.date-separator::before {
+  left: 0;
+}
+
+.date-separator::after {
+  right: 0;
+}
