@@ -25,21 +25,23 @@
     <!-- 2. Messages Container -->
     <div class="chat-messages rounded" id="chat-log">
       {% for message in messages %}
-        <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
-          <strong>{{ message.sender.username }}:</strong>
-          <br>
-          {% if message.image %}
-            {{ message.content }}
-            <br>
-            <a href="{{ message.image.url }}" target="_blank">
-              <img src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}" style="max-width: 200px;">
-            </a>
-          {% else %}
-            {{ message.content }}
-          {% endif %}
-          <br>
-          <small>{{ message.created_at|date:"d M Y H:i" }}</small>
+      <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+        <strong class="sender">{{ message.sender.username }}</strong>
+        <div class="message-body">
+          <div class="message-content">
+            {% if message.image %}
+              {{ message.content }}
+              <br>
+              <a href="{{ message.image.url }}" target="_blank">
+                <img src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}" style="max-width: 200px;">
+              </a>
+            {% else %}
+              {{ message.content }}
+            {% endif %}
+          </div>
+          <small class="timestamp">{{ message.created_at|date:"H:i" }}</small>
         </div>
+      </div>
       {% endfor %}
     </div>
   

@@ -1,195 +1,218 @@
+/* Reset default margins and paddings */
 html, body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 @font-face {
-    font-family: 'RobotoVariable';
-    src: url('../fonts/roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 100 900; 
-    font-style: normal;
+  font-family: 'RobotoVariable';
+  src: url('../fonts/roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900; 
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'RobotoVariable';
-    src: url('../fonts/roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 100 900;
-    font-style: italic;
+  font-family: 'RobotoVariable';
+  src: url('../fonts/roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
 }
 
 body {
-    font-family: 'RobotoVariable', sans-serif;
-    background-color: #2C2C2C;
-    color: #FFFFFF;
+  font-family: 'RobotoVariable', sans-serif;
+  background-color: #2C2C2C;
+  color: #FFFFFF;
 }
 
 /* Navbar styles */
 .navbar {
-    background-color: #444444;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #666666;
+  background-color: #444444;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #666666;
 }
 
 .navbar a {
-    color: #FFFFFF;
-    text-decoration: none;
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 .navbar-left h1 {
-    margin: 0;
+  margin: 0;
 }
 
 .navbar-right {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .username {
-    margin-right: 15px;
-    font-weight: bold;
+  margin-right: 15px;
+  font-weight: bold;
 }
 
 .logout-button {
-    background-color: #444444;
-    padding: 8px 15px;          /* updated padding */
-    border: none;
-    border-radius: 4px;         /* slightly less rounded */
-    color: #FFFFFF;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
+  background-color: #444444;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  color: #FFFFFF;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
-    background-color: #e04343;
+  background-color: #e04343;
 }
 
 /* Content area to separate page content from the navbar */
 .content {
-    padding: 20px;
+  padding: 20px;
 }
+
 /* Center the chat interface */
 .chat-wrapper {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 10px;
-  }
-  
-  /* Rounded container style */
-  .rounded {
-    border-radius: 10px;
-    background-color: #333333;
-    padding: 15px;
-    margin-bottom: 20px;
-    position: relative; /* Necessary for absolute positioning inside */
-  }
-  
-  /* Header container styling */
-  .chat-header {
-    text-align: center;
-    position: relative; /* For absolute positioning of the edit icon */
-  }
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+}
 
-  /* Increase the size of the room name */
-  .chat-header h1 {
-    font-size: 2em; /* Larger than default h1 size if desired */
-    margin: 0;
-  }
-  
-  /* Participants info styling */
-  .chat-header .participants {
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: #cccccc;
-  }
-  
- /* Edit button styled as a gear icon */
-  .edit-room {
-    position: absolute;
-    top: 15px;      /* Align with the container's padding */
-    right: 30px;    /* Align with the container's horizontal padding */
-    background-color: transparent; /* Remove background for a minimalist icon look */
-    font-size: 1.8em;  /* Increase icon size */
-    color: #ff4d4d;    /* Use a contrasting color for visibility */
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .edit-room:hover {
-    color: #e04343;
-  }
+/* Rounded container style */
+.rounded {
+  border-radius: 10px;
+  background-color: #333333;
+  padding: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
 
-  /* Messages Container */
-  .chat-messages {
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  /* Chat Bubble Styles with Box Shadow */
-  .chat-message {
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    max-width: 70%;
-    word-wrap: break-word;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-  }
+/* Chat Header */
+.chat-header {
+  text-align: center;
+  position: relative;
+}
 
-  /* Differentiating Sent and Received Messages */
-  .chat-message.sent {
-    background-color: #4a90e2; /* Color for messages sent by the user */
-    margin-left: auto;
-    text-align: right;
-  }
-  .chat-message.received {
-    background-color: #3a3a3a; /* Color for messages from others */
-    margin-right: auto;
-    text-align: left;
-  }
-  
-  /* Enhance Sender Name and Timestamp Styling */
-  .chat-message strong {
-    color: #FFD700;
-    font-size: 1.1em;
-  }
-  .chat-message small {
-    display: block;
-    color: #AAAAAA;
-    font-size: 0.8em;
-    text-align: right;
-    margin-top: 5px;
-  }
-  
-  /* Input container styling */
-  .chat-input {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .chat-input input[type="text"] {
-    flex: 1;
-    padding: 8px;
-  }
-  
-  .chat-input input[type="file"] {
-    padding: 8px;
-  }
-  
-  .chat-input button {
-    padding: 8px 15px;
-    background-color: #ff4d4d;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .chat-input button:hover {
-    background-color: #e04343;
-  }
-  
+.chat-header h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+.chat-header .participants {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #cccccc;
+}
+
+.edit-room {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  background-color: transparent;
+  font-size: 1.8em;
+  color: #ff4d4d;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.edit-room:hover {
+  color: #e04343;
+}
+
+/* Messages Container */
+.chat-messages {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Chat Bubble Styles with Box Shadow */
+.chat-message {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+}
+
+/* Differentiate Sent and Received Messages */
+.chat-message.sent {
+  background-color: #4a90e2; /* Sent messages by the user */
+  margin-left: auto;
+  text-align: right;
+}
+.chat-message.received {
+  background-color: #3a3a3a; /* Received messages */
+  margin-right: auto;
+  text-align: left;
+}
+
+/* Sender (username) styling remains above the message body */
+.chat-message .sender {
+  display: block;
+  color: #FFD700;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+/* Message body container for content and timestamp */
+.chat-message .message-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* For received messages: message content on left, timestamp on right */
+.chat-message.received .message-body {
+  flex-direction: row;
+}
+
+/* For sent messages: timestamp on left, message content on right */
+.chat-message.sent .message-body {
+  flex-direction: row-reverse;
+}
+
+/* Message content styling */
+.chat-message .message-content {
+  flex: 1;
+}
+
+/* Timestamp styling */
+.chat-message .timestamp {
+  font-size: 0.8em;
+  color: #AAAAAA;
+  white-space: nowrap;
+  margin: 0 10px;
+}
+
+/* Input container styling */
+.chat-input {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input input[type="text"] {
+  flex: 1;
+  padding: 8px;
+}
+
+.chat-input input[type="file"] {
+  padding: 8px;
+}
+
+.chat-input button {
+  padding: 8px 15px;
+  background-color: #ff4d4d;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+  background-color: #e04343;
+}

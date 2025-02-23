@@ -21,26 +21,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const chatLog = document.getElementById('chat-log');
         // Create a new div for the message
         const newMessage = document.createElement('div');
-        // Determine message type
+        // Determine message type: 'sent' or 'received'
         const messageType = (data.sender === currentUser) ? 'sent' : 'received';
         newMessage.classList.add('chat-message', messageType);
 
-        // Build message content
-        let htmlContent = `<strong>${data.sender}:</strong><br>`;
-        htmlContent += `${data.message}`;
+        // Format timestamp as hh:mm
+        const timestampDate = new Date(data.timestamp);
+        let hours = timestampDate.getHours();
+        let minutes = timestampDate.getMinutes();
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }
+        const formattedTime = `${hours}:${minutes}`;
+
+        // Build the new HTML structure:
+        let htmlContent = `<strong class="sender">${data.sender}</strong>`;
+        htmlContent += `<div class="message-body">`;
+        htmlContent += `<div class="message-content">${data.message}`;
         if (data.image_url) {
             htmlContent += `<br><a href="${data.image_url}" target="_blank">
-                <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
-                </a>`;
+                                <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
+                            </a>`;
         }
-        // Convert timestamp to a readable format if needed
-        // Here we simply output the raw ISO string. Adjust as needed.
-        htmlContent += `<br><small>${data.timestamp}</small>`;
-        newMessage.innerHTML = htmlContent;
+        htmlContent += `</div>`;
+        htmlContent += `<small class="timestamp">${formattedTime}</small>`;
+        htmlContent += `</div>`;
 
+        newMessage.innerHTML = htmlContent;
         chatLog.appendChild(newMessage);
 
-        // Auto-scroll: set scrollTop to the height of the container
+        // Auto-scroll to the bottom of the chat log
         chatLog.scrollTop = chatLog.scrollHeight;
     };
 
