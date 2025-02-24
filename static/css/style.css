@@ -77,7 +77,7 @@ body {
 /* Center the chat interface */
 .chat-wrapper {
   max-width: 800px;
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 10px;
 }
 
@@ -97,7 +97,7 @@ body {
 }
 
 .chat-header h1 {
-  font-size: 2em;
+  font-size: 1.8em;
   margin: 0;
 }
 
@@ -124,15 +124,25 @@ body {
 
 /* Messages Container */
 .chat-messages {
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
 /* Chat Bubble Styles with Box Shadow */
-.chat-message {
-  padding: 10px 15px;
+/* .chat-message {
+  padding: 6px 9px;
   margin-bottom: 10px;
   max-width: 70%;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+} */
+
+.chat-message {
+  display: table;
+  max-width: 70%; /* Ensure it never exceeds 70% of the container */
+  padding: 8px 12px;
+  margin-bottom: 10px;
   word-wrap: break-word;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
@@ -145,7 +155,7 @@ body {
   text-align: right;
 }
 .chat-message.received {
-  background-color: #3a3a3a; /* Received messages */
+  background-color: #5e5e5e; /* Received messages */
   margin-right: auto;
   text-align: left;
 }
@@ -154,7 +164,7 @@ body {
 .chat-message .sender {
   display: block;
   color: #FFD700;
-  font-size: 1.1em;
+  font-size: 0.9em;
   margin-bottom: 5px;
 }
 
@@ -183,7 +193,7 @@ body {
 /* Timestamp styling */
 .chat-message .timestamp {
   font-size: 0.8em;
-  color: #AAAAAA;
+  color: #c5c5c5;
   white-space: nowrap;
   margin: 0 10px;
 }
