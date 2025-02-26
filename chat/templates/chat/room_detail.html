@@ -30,23 +30,27 @@
         {% endifchanged %}
     
       
-      <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
-        <strong class="sender">{{ message.sender.username }}</strong>
-        <div class="message-body">
-          <div class="message-content">
-            {% if message.image %}
-              {{ message.content }}
-              <br>
-              <a href="{{ message.image.url }}" target="_blank">
-                <img src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}" style="max-width: 200px;">
-              </a>
-            {% else %}
-              {{ message.content }}
-            {% endif %}
+        <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+          <!-- Header: contains username and timestamp -->
+          <div class="chat-message-header">
+            <strong class="sender">{{ message.sender.username }}</strong>
+            <span class="timestamp">{{ message.created_at|date:"H:i" }}</span>
           </div>
-          <small class="timestamp">{{ message.created_at|date:"H:i" }}</small>
+          
+          <!-- Message Body -->
+          <div class="message-body">
+            <div class="message-content">
+              {% if message.image %}
+                {{ message.content }}<br>
+                <a href="{{ message.image.url }}" target="_blank">
+                  <img src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}" style="max-width: 200px;">
+                </a>
+              {% else %}
+                {{ message.content }}
+              {% endif %}
+            </div>
+          </div>
         </div>
-      </div>
       {% endfor %}
     
     </div>

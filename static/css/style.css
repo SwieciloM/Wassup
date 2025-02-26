@@ -93,6 +93,7 @@ body {
 /* Chat Header */
 .chat-header {
   text-align: center;
+  min-width: 500px;
   position: relative;
 }
 
@@ -125,27 +126,21 @@ body {
 /* Messages Container */
 .chat-messages {
   max-height: 500px;
+  min-width: 500px;
   overflow-y: auto;
 }
 
 /* Chat Bubble Styles with Box Shadow */
-/* .chat-message {
-  padding: 6px 9px;
-  margin-bottom: 10px;
-  max-width: 70%;
-  word-wrap: break-word;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-} */
-
 .chat-message {
-  display: table;
-  max-width: 70%; /* Ensure it never exceeds 70% of the container */
+  display: block;
+  width: fit-content; /* New: shrink-wraps the width to the content */
+  max-width: 70%; /* Keeps the bubble from growing too wide */
   padding: 8px 12px;
   margin-bottom: 10px;
   word-wrap: break-word;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
+  position: relative;
 }
 
 /* Differentiate Sent and Received Messages */
@@ -160,47 +155,52 @@ body {
   text-align: left;
 }
 
-/* Sender (username) styling remains above the message body */
-.chat-message .sender {
-  display: block;
-  color: #FFD700;
-  font-size: 0.9em;
-  margin-bottom: 5px;
-}
-
-/* Message body container for content and timestamp */
-.chat-message .message-body {
-  display: flex;
-  justify-content: space-between;
+/* Header for chat message containing username and timestamp */
+.chat-message-header {
+  display: inline-flex;  /* Takes only the natural width of its content */
   align-items: center;
+  margin-bottom: 5px;    /* Space between header and message body */
 }
 
-/* For received messages: message content on left, timestamp on right */
-.chat-message.received .message-body {
-  flex-direction: row;
-}
-
-/* For sent messages: timestamp on left, message content on right */
-.chat-message.sent .message-body {
+/* For sent messages: reverse the order and float the header right */
+.sent .chat-message-header {
+  float: right;
   flex-direction: row-reverse;
 }
 
-/* Message content styling */
-.chat-message .message-content {
-  flex: 1;
+/* For received messages: normal order and float header left */
+.received .chat-message-header {
+  float: left;
+  flex-direction: row;
 }
 
-/* Timestamp styling */
+/* Clear floats for the message body */
+.message-body {
+  clear: both;
+  display: flex;
+}
+
+/* Styling for header elements */
+.chat-message .sender {
+  color: #FFD700;
+  font-size: 0.9em;
+}
+
 .chat-message .timestamp {
-  font-size: 0.8em;
+  font-size: 0.7em;
   color: #c5c5c5;
-  white-space: nowrap;
   margin: 0 10px;
+}
+
+/* Message content styling */
+.message-content {
+  flex: 1;
 }
 
 /* Input container styling */
 .chat-input {
   display: flex;
+  min-width: 500px;
   gap: 10px;
 }
 

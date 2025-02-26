@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatLog = document.getElementById('chat-log');
     const dateSeparators = chatLog.querySelectorAll('.date-separator');
     let lastMessageDate = dateSeparators.length > 0 
-    ? dateSeparators[dateSeparators.length - 1].innerText.trim() 
-    : "";
+        ? dateSeparators[dateSeparators.length - 1].innerText.trim() 
+        : "";
 
     // Listen for messages from the server.
     chatSocket.onmessage = function(e) {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const formattedTime = `${hours}:${minutes}`;
 
-        // Format the full date string as "D, d.m.Y" (e.g., "Sun, 23.02.2025")
+        // Format the full date string as "d.m.Y" (e.g., "23.02.2025")
         const formattedDate = timestampDate.toLocaleDateString(undefined, {
             day: '2-digit',
             month: '2-digit',
@@ -56,19 +56,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageType = (data.sender === currentUser) ? 'sent' : 'received';
         newMessage.classList.add('chat-message', messageType);
 
-        // Build the new HTML structure:
-        // Sender's name on top and then a flex container with message content and timestamp.
-        let htmlContent = `<strong class="sender">${data.sender}</strong>`;
+        // Build the new HTML structure to match the template:
+        // 1. Header container with sender and timestamp.
+        // 2. Message body with the content (and optional image).
+        let htmlContent = `<div class="chat-message-header">`;
+        htmlContent += `<strong class="sender">${data.sender}</strong>`;
+        htmlContent += `<span class="timestamp">${formattedTime}</span>`;
+        htmlContent += `</div>`;
         htmlContent += `<div class="message-body">`;
         htmlContent += `<div class="message-content">${data.message}`;
         if (data.image_url) {
             htmlContent += `<br><a href="${data.image_url}" target="_blank">
-                              <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
+                                <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
                             </a>`;
         }
-        htmlContent += `</div>`;
-        htmlContent += `<small class="timestamp">${formattedTime}</small>`;
-        htmlContent += `</div>`;
+        htmlContent += `</div></div>`;
 
         newMessage.innerHTML = htmlContent;
         chatLog.appendChild(newMessage);
