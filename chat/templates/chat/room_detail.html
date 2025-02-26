@@ -40,13 +40,16 @@
           <!-- Message Body -->
           <div class="message-body">
             <div class="message-content">
-              {% if message.image %}
-                {{ message.content }}<br>
-                <a href="{{ message.image.url }}" target="_blank">
-                  <img src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}" style="max-width: 200px;">
-                </a>
-              {% else %}
+              {% if message.content %}
                 {{ message.content }}
+                {% if message.image %}
+                  <br>
+                {% endif %}
+              {% endif %}
+              {% if message.image %}
+                <a href="{{ message.image.url }}" target="_blank">
+                  <img class="message-image" src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}">
+                </a>
               {% endif %}
             </div>
           </div>

@@ -197,6 +197,15 @@ body {
   flex: 1;
 }
 
+.message-content img {
+  min-width: 100px;
+  min-height: 75px;
+  max-width: 400px;   /* Maximum allowed width */
+  max-height: 300px;  /* Maximum allowed height */
+  width: auto;        /* Let the image adjust width automatically */
+  height: auto;       /* Let the image adjust height automatically */
+}
+
 /* Input container styling */
 .chat-input {
   display: flex;

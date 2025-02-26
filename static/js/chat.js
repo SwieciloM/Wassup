@@ -64,10 +64,20 @@ document.addEventListener('DOMContentLoaded', function() {
         htmlContent += `<span class="timestamp">${formattedTime}</span>`;
         htmlContent += `</div>`;
         htmlContent += `<div class="message-body">`;
-        htmlContent += `<div class="message-content">${data.message}`;
+        htmlContent += `<div class="message-content">`;
+
+        // Only add text if it's not empty
+        if (data.message && data.message.trim() !== '') {
+            htmlContent += data.message;
+            // Only insert a break if both text and an image exist
+            if (data.image_url) {
+                htmlContent += `<br>`;
+            }
+        }
+
         if (data.image_url) {
-            htmlContent += `<br><a href="${data.image_url}" target="_blank">
-                                <img src="${data.image_url}" alt="Image from ${data.sender}" style="max-width: 200px;">
+            htmlContent += `<a href="${data.image_url}" target="_blank">
+                                <img class="message-image" src="${data.image_url}" alt="Image from ${data.sender}">
                             </a>`;
         }
         htmlContent += `</div></div>`;
