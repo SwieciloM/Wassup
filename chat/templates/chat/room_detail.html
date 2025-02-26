@@ -7,65 +7,64 @@
 <div id="chat-data" data-room-id="{{ room.id }}"></div>
 
 <div class="chat-wrapper">
-    <!-- 1. Header Container: Lobby name and participant list -->
-    <div class="chat-header rounded">
-      <h1>{{ room.name }}</h1>
-      <div class="participants">
-        {{ room.owner.username }}
-        {% for guest in room.guests.all %}
-          , {{ guest.username }}
-        {% endfor %}
-      </div>
-      {% if not room.is_owner_only_editable or request.user == room.owner %}
-        <!-- Edit button as a gear icon -->
-        <a href="{% url 'room-update' room.id %}" class="edit-room">&#9881;</a>
-      {% endif %}
-    </div>
-  
-    <!-- 2. Messages Container -->
-    <div class="chat-messages rounded" id="chat-log">
-      {% for message in messages %}
-        {% ifchanged message.created_at|date:"d.m.Y" %}
-        <div class="date-separator">{{ message.created_at|date:"d.m.Y" }}</div>
-        {% endifchanged %}
-    
-      
-        <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
-          <!-- Header: contains username and timestamp -->
-          <div class="chat-message-header">
-            <strong class="sender">{{ message.sender.username }}</strong>
-            <span class="timestamp">{{ message.created_at|date:"H:i" }}</span>
-          </div>
-          
-          <!-- Message Body -->
-          <div class="message-body">
-            <div class="message-content">
-              {% if message.content %}
-                {{ message.content }}
-                {% if message.image %}
-                  <br>
-                {% endif %}
-              {% endif %}
-              {% if message.image %}
-                <a href="{{ message.image.url }}" target="_blank">
-                  <img class="message-image" src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}">
-                </a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+  <!-- 1. Header Container: Lobby name and participant list -->
+  <div class="chat-header rounded">
+    <h1>{{ room.name }}</h1>
+    <div class="participants">
+      {{ room.owner.username }}
+      {% for guest in room.guests.all %}
+        , {{ guest.username }}
       {% endfor %}
-    
     </div>
-  
-    <!-- 3. Input Container -->
-    <div class="chat-input rounded">
-      <input id="chat-message-input" type="text" placeholder="Wpisz wiadomość...">
-      <input id="chat-image-input" type="file" accept="image/*">
-      <button id="chat-message-send">Wyślij</button>
-    </div>
+    {% if not room.is_owner_only_editable or request.user == room.owner %}
+      <!-- Edit button as a gear icon -->
+      <a href="{% url 'room-update' room.id %}" class="edit-room">&#9881;</a>
+    {% endif %}
   </div>
   
-  <!-- Include the external JavaScript file -->
-  <script src="{% static 'js/chat.js' %}"></script>
-  {% endblock %}
+  <!-- 2. Messages Container -->
+  <div class="chat-messages rounded" id="chat-log">
+    {% for message in messages %}
+      {% ifchanged message.created_at|date:"d.m.Y" %}
+      <div class="date-separator">{{ message.created_at|date:"d.m.Y" }}</div>
+      {% endifchanged %}
+  
+    
+      <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+        <!-- Header: contains username and timestamp -->
+        <div class="chat-message-header">
+          <strong class="sender">{{ message.sender.username }}</strong>
+          <span class="timestamp">{{ message.created_at|date:"H:i" }}</span>
+        </div>
+        
+        <!-- Message Body -->
+        <div class="message-body">
+          <div class="message-content">
+            {% if message.content %}
+              {{ message.content }}
+              {% if message.image %}
+                <br>
+              {% endif %}
+            {% endif %}
+            {% if message.image %}
+              <a href="{{ message.image.url }}" target="_blank">
+                <img class="message-image" src="{{ message.image.url }}" alt="Image from {{ message.sender.username }}">
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  
+  <!-- 3. Input Container -->
+  <div class="chat-input rounded">
+    <input id="chat-message-input" type="text" placeholder="Wpisz wiadomość...">
+    <input id="chat-image-input" type="file" accept="image/*">
+    <button id="chat-message-send">Wyślij</button>
+  </div>
+</div>
+  
+<!-- Include the external JavaScript file -->
+<script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}
