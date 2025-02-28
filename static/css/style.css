@@ -195,62 +195,48 @@ body {
 /* Message content styling */
 .message-content {
   flex: 1;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .message-content img {
   min-width: 100px;
   min-height: 75px;
-  max-width: 400px;   /* Maximum allowed width */
-  max-height: 300px;  /* Maximum allowed height */
+  max-width: 320px;   /* Maximum allowed width */
+  max-height: 240px;  /* Maximum allowed height */
   width: auto;        /* Let the image adjust width automatically */
   height: auto;       /* Let the image adjust height automatically */
 }
 
 /* Chat Input Container (rounded) */
 .chat-input {
-  position: relative;
+  display: flex;
+  align-items: center;
   min-width: 500px;
   border-radius: 10px; /* Matches other containers */
   background-color: #333333;
   padding: 8px 10px;
-  overflow: hidden;
 }
 
-/* Wrapper to hold the input and embedded buttons inside the field */
-.input-wrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 20px; /* More rounded */
-  overflow: hidden;
-}
-
-/* Text input styling with white background and extra right padding */
+/* Text input styling */
 .chat-input input[type="text"] {
-  width: 100%;
-  padding: 8px 60px 8px 8px; /* Leaves space on right for buttons */
+  flex: 1;
+  padding: 8px 12px;
+  margin: 0 10px; /* Adds space between the buttons and the text field */
   border: none;
   background: #ffffff;
   outline: none;
   color: #000000;
   font-size: 1em;
-  border-radius: inherit;
+  border-radius: 20px;
 }
 
+/* Hide the file input */
 .chat-input input[type="file"] {
-  display: none !important; /* Force hide the file input */
+  display: none !important;
 }
 
-/* Embedded buttons positioned inside the input field */
-.chat-input-buttons {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  gap: 4px; /* Reduced gap so the buttons are closer together */
-}
-
-/* Image insert button styling */
+/* Image button styling */
 .image-button {
   cursor: pointer;
   font-size: 1.2em;
@@ -258,29 +244,29 @@ body {
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 50%;
-  width: 32px; 
-  height: 32px; 
-  display: inline-flex; 
-  align-items: center; 
-  justify-content: center; 
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: background-color 0.3s ease;
 }
 .image-button:hover {
   background-color: #e0e0e0;
 }
 
-/* Send button styling (using an icon instead of text) */
+/* Send button styling */
 .send-button {
   background-color: #ffffff;
   border: 1px solid #ccc;
   color: #333333;
   font-size: 1.2em;
   border-radius: 50%;
-  width: 32px; 
-  height: 32px; 
-  display: inline-flex; 
-  align-items: center; 
-  justify-content: center; 
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -313,5 +299,3 @@ body {
 .date-separator::after {
   right: 0;
 }
-
-/* TEMP
