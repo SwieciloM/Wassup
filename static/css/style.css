@@ -123,6 +123,22 @@ body {
   color: #e04343;
 }
 
+.return-room {
+  position: absolute;
+  left: 30px;
+  top: 15px;
+  background-color: transparent;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #ff4d4d;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.return-room:hover {
+  color: #e04343;
+}
+
 /* Messages Container */
 .chat-messages {
   max-height: 500px;
