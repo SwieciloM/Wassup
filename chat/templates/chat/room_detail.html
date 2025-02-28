@@ -59,11 +59,14 @@
   
   <!-- 3. Input Container -->
   <div class="chat-input rounded">
-    <label for="chat-image-input" class="image-button">&#128247;</label>
-    <input id="chat-image-input" type="file" accept="image/*">
-    <input id="chat-message-input" type="text" placeholder="Type your message...">
-    <button id="chat-message-send" class="send-button">&#10148;</button>
-  </div>
+    <div class="chat-input-top">
+      <label for="chat-image-input" class="image-button">&#128247;</label>
+      <input id="chat-image-input" type="file" accept="image/*">
+      <input id="chat-message-input" type="text" placeholder="Type your message...">
+      <button id="chat-message-send" class="send-button">&#10148;</button>
+    </div>
+    <div id="attachment-preview" class="attachment-preview"></div>
+  </div>  
 </div>
 <!-- &#10095; &#10097; &#10148; &#10151; -->
 <!-- Include the external JavaScript file -->

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric'
-        }).replace(/\//g, '.'); // Replace any slashes with dots if needed
+        }).replace(/\//g, '.');
 
         // If the date changes from the last message, insert a date separator.
         if (lastMessageDate !== formattedDate) {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageType = (data.sender === currentUser) ? 'sent' : 'received';
         newMessage.classList.add('chat-message', messageType);
 
-        // Build the new HTML structure to match the template:
+        // Build the new HTML structure:
         // 1. Header container with sender and timestamp.
         // 2. Message body with the content (and optional image).
         let htmlContent = `<div class="chat-message-header">`;
@@ -85,8 +85,20 @@ document.addEventListener('DOMContentLoaded', function() {
         newMessage.innerHTML = htmlContent;
         chatLog.appendChild(newMessage);
 
-        // Auto-scroll to the bottom of the chat log
-        chatLog.scrollTop = chatLog.scrollHeight;
+        // If the new message includes an image, wait for it to load before scrolling
+        if (data.image_url) {
+            const imgElement = newMessage.querySelector('img');
+            if (imgElement) {
+                imgElement.onload = function() {
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                };
+            } else {
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+        } else {
+            // For text-only messages, scroll immediately
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }        
     };
 
     chatSocket.onclose = function(e) {
@@ -96,6 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('chat-message-send');
     const messageInput = document.getElementById('chat-message-input');
     const imageInput = document.getElementById('chat-image-input');
+    const attachmentPreview = document.getElementById('attachment-preview');
 
     sendButton.addEventListener('click', function() {
         const message = messageInput.value;
@@ -104,13 +117,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (file) {
             const reader = new FileReader();
             reader.onload = function() {
-                const imageData = reader.result;
                 chatSocket.send(JSON.stringify({
                     'message': message,
-                    'image': imageData
+                    'image': reader.result
                 }));
                 messageInput.value = '';
                 imageInput.value = '';
+                attachmentPreview.textContent = '';
+                attachmentPreview.style.display = 'none';
             };
             reader.readAsDataURL(file);
         } else {
@@ -118,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 'message': message
             }));
             messageInput.value = '';
+            attachmentPreview.textContent = '';
+            attachmentPreview.style.display = 'none';
         }
     });
 
@@ -126,10 +142,24 @@ document.addEventListener('DOMContentLoaded', function() {
             sendButton.click();
         }
     });
+
+    // File input change listener to show attachment preview
+    document.getElementById("chat-image-input").addEventListener("change", function() {
+        var fileInput = this;
+        var preview = document.getElementById("attachment-preview");
+        
+        if (fileInput.files.length > 0) {
+          preview.textContent = fileInput.files[0].name;
+          preview.style.display = 'block';
+        } else {
+          preview.textContent = "";
+          preview.style.display = 'none';
+        }
+    });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Scroll chat log to the bottom on page load
+// Auto-scroll using window load event
+window.addEventListener('load', function() {
     const chatLog = document.getElementById('chat-log');
     if (chatLog) {
         chatLog.scrollTop = chatLog.scrollHeight;

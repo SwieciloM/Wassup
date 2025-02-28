@@ -208,21 +208,31 @@ body {
   height: auto;       /* Let the image adjust height automatically */
 }
 
-/* Chat Input Container (rounded) */
+/* Chat Input Container (rounded) with column layout */
 .chat-input {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   min-width: 500px;
   border-radius: 10px; /* Matches other containers */
   background-color: #333333;
   padding: 8px 10px;
+  overflow: hidden;
+}
+
+/* Top row: buttons and text input in a horizontal flex container */
+.chat-input-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
 }
 
 /* Text input styling */
 .chat-input input[type="text"] {
   flex: 1;
   padding: 8px 12px;
-  margin: 0 10px; /* Adds space between the buttons and the text field */
+  margin: 0; /* Removed extra margins so it fills available space */
   border: none;
   background: #ffffff;
   outline: none;
@@ -272,6 +282,18 @@ body {
 }
 .send-button:hover {
   background-color: #e0e0e0;
+}
+
+/* Attachment preview styling (hidden by default, appears below top row) */
+.attachment-preview {
+  display: none;  /* Hidden until a file is selected */
+  width: 100%;
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #cccccc;
+  padding: 4px 8px;
+  background-color: #333333;
+  border-radius: 5px;
 }
 
 .date-separator {
