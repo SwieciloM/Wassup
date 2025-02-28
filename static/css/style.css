@@ -236,7 +236,7 @@ body {
   display: none !important;
 }
 
-/* Image button styling */
+/* Image insert button styling */
 .image-button {
   cursor: pointer;
   font-size: 1.2em;
@@ -244,8 +244,8 @@ body {
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 33px; 
+  height: 33px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -259,11 +259,11 @@ body {
 .send-button {
   background-color: #ffffff;
   border: 1px solid #ccc;
-  color: #333333;
-  font-size: 1.2em;
+  color: #1271a3;  /* Dark green */
+  font-size: 1.3em;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
