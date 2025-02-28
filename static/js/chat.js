@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     sendButton.addEventListener('click', function() {
         const message = messageInput.value;
         const file = imageInput.files[0];
-
+    
         if (file) {
             const reader = new FileReader();
             reader.onload = function() {
@@ -123,7 +123,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }));
                 messageInput.value = '';
                 imageInput.value = '';
-                attachmentPreview.textContent = '';
+                // Clear only the text in the preview span
+                document.getElementById('attachment-text').textContent = '';
                 attachmentPreview.style.display = 'none';
             };
             reader.readAsDataURL(file);
@@ -132,10 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 'message': message
             }));
             messageInput.value = '';
-            attachmentPreview.textContent = '';
+            imageInput.value = '';
+            // Clear only the text in the preview span
+            document.getElementById('attachment-text').textContent = '';
             attachmentPreview.style.display = 'none';
         }
-    });
+    });    
 
     messageInput.addEventListener('keyup', function(event) {
         if (event.keyCode === 13) {
@@ -143,18 +146,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // File input change listener to show attachment preview
+    // File input change listener to show attachment preview with remove button
     document.getElementById("chat-image-input").addEventListener("change", function() {
         var fileInput = this;
         var preview = document.getElementById("attachment-preview");
+        var previewText = document.getElementById("attachment-text");
         
         if (fileInput.files.length > 0) {
-          preview.textContent = fileInput.files[0].name;
-          preview.style.display = 'block';
+            previewText.textContent = fileInput.files[0].name;
+            preview.style.display = 'flex';
         } else {
-          preview.textContent = "";
-          preview.style.display = 'none';
+            previewText.textContent = "";
+            preview.style.display = 'none';
         }
+    });
+
+    // Listener for the remove (x) button
+    document.getElementById("attachment-remove").addEventListener("click", function() {
+        var fileInput = document.getElementById("chat-image-input");
+        var preview = document.getElementById("attachment-preview");
+        var previewText = document.getElementById("attachment-text");
+        
+        // Clear the file input and hide the preview
+        fileInput.value = "";
+        previewText.textContent = "";
+        preview.style.display = 'none';
     });
 });
 

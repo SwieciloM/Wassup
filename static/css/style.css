@@ -284,16 +284,39 @@ body {
   background-color: #e0e0e0;
 }
 
-/* Attachment preview styling (hidden by default, appears below top row) */
+/* Attachment preview styling (hidden by default) */
 .attachment-preview {
   display: none;  /* Hidden until a file is selected */
-  width: 100%;
   margin-top: 8px;
-  font-size: 0.9em;
-  color: #cccccc;
   padding: 4px 8px;
   background-color: #333333;
   border-radius: 5px;
+  font-size: 0.9em;
+  color: #cccccc;
+  align-items: center;
+  /* Remove space-between to let items sit closer */
+  justify-content: flex-start;
+}
+
+/* Remove flex-grow from the attachment text and add a small right margin */
+#attachment-text {
+  margin-right: 8px;
+}
+
+/* Style for the remove (x) button: change its color to red */
+.attachment-remove {
+  background: transparent;
+  border: none;
+  color: rgb(200, 0, 0);
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+/* Optional: darken the red color on hover */
+.attachment-remove:hover {
+  color: rgb(150, 0, 0);
 }
 
 .date-separator {
