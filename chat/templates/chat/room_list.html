@@ -2,38 +2,67 @@
 
 {% block main_content %}
 <h1>Home page with rooms list</h1>
-<h1>Welcome {{ request.user|title }}!</h1>
 <a href="{% url 'room-create' %}">Add Room</a>
 
 <h3>Connected rooms:</h3>
 {% if connected_rooms %}
-    <table>
-        {% for room in connected_rooms %}
-            <tr>
-                <td><a href="{% url 'room' room.id %}">{{ room.name }} 
-                {% if request.user == room.owner %}
-                    (owner)
-                {% else %}
-                    (guest)
-                {% endif %}
-                </a></td>
-            </tr>
-        {% endfor %}
-    </table>
+  <div class="room-grid">
+    {% for room in connected_rooms %}
+      <div class="room-card">
+        <div class="room-header">
+          <h2 class="room-name">{{ room.name }}</h2>
+          <button class="fav-toggle" data-room-id="{{ room.id }}">&#9734;</button>
+        </div>
+        <div class="room-info">
+          <span class="participants-count">
+            Participants: {{ room.guests.all|length|add:"1" }}
+          </span>
+          {% if request.user == room.owner %}
+            <span class="owner-tag">(Owner)</span>
+          {% else %}
+            <span class="guest-tag">(Guest)</span>
+          {% endif %}
+        </div>
+        <div class="room-actions">
+          {% if request.user == room.owner %}
+            <button class="options-button" data-room-id="{{ room.id }}">Options</button>
+          {% endif %}
+          <button class="leave-room-button" data-room-id="{{ room.id }}">Leave Room</button>
+          <a href="{% url 'room' room.id %}" class="enter-room-button">Enter Room</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% else %}
-    <h3>No connected rooms</h3>
+  <h3>No connected rooms</h3>
 {% endif %}
 
 <h3>Public rooms:</h3>
 {% if public_rooms %}
-    <table>
-        {% for room in public_rooms %}
-            <tr>
-                <td><a href="{% url 'room' room.id %}">{{ room.name }}</a></td>
-            </tr>
-        {% endfor %}
-    </table>
+  <div class="room-grid">
+    {% for room in public_rooms %}
+      <div class="room-card">
+        <div class="room-header">
+          <h2 class="room-name">{{ room.name }}</h2>
+        </div>
+        <div class="room-info">
+          <span class="participants-count">
+            Participants: {{ room.guests.all|length|add:"1" }}
+          </span>
+          {% if request.user == room.owner %}
+            <span class="owner-tag">(Owner)</span>
+          {% endif %}
+        </div>
+        <div class="room-actions">
+          {% if request.user == room.owner %}
+            <button class="options-button" data-room-id="{{ room.id }}">Options</button>
+          {% endif %}
+          <a href="{% url 'room' room.id %}" class="enter-room-button">Join Room</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% else %}
-    <h3>No public rooms</h3>
+  <h3>No public rooms</h3>
 {% endif %}
 {% endblock %}

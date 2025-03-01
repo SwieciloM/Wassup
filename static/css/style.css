@@ -360,3 +360,101 @@ body {
 .date-separator::after {
   right: 0;
 }
+
+/* Responsive grid for room cards */
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+  gap: 15px;
+  justify-content: start; /* Center the cards when there's extra space */
+}
+
+/* Each room appears in a rounded rectangle with a maximum width */
+.room-card {
+  background-color: #333333;
+  border-radius: 10px;
+  padding: 15px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Remove width: 100%; so the card doesn't expand to fill the grid cell */
+}
+
+/* Header: room name and favourite toggle */
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-name {
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.fav-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.4em;
+  color: #ffcc00;
+  cursor: pointer;
+}
+
+/* Info: participant count and owner/guest indicator */
+.room-info {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.owner-tag {
+  color: #FFD700;
+  margin-left: 5px;
+}
+
+.guest-tag {
+  color: #cccccc;
+  margin-left: 5px;
+}
+
+/* Actions at the bottom of each card */
+.room-actions {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Buttons style */
+.options-button,
+.leave-room-button {
+  background-color: #555555;
+  border: none;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.options-button:hover,
+.leave-room-button:hover {
+  background-color: #777777;
+}
+
+/* Big Enter Room button */
+.enter-room-button {
+  background-color: #4a90e2;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.2em;
+  flex: 1;
+  margin-top: 10px;
+}
+
+.enter-room-button:hover {
+  background-color: #357ABD;
+}
