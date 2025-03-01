@@ -11,7 +11,16 @@
       <div class="room-card">
         <div class="room-header">
           <h2 class="room-name">{{ room.name }}</h2>
-          <button class="fav-toggle" data-room-id="{{ room.id }}">&#9734;</button>
+          <form method="POST" action="{% url 'room-toggle-favourite' room.id %}" class="fav-toggle-form">
+            {% csrf_token %}
+            <input type="checkbox" 
+                   id="fav-toggle-{{ room.id }}" 
+                   name="toggle" 
+                   onChange="this.form.submit()"
+                   {% if request.user in room.favorited_by.all %} checked {% endif %}
+                   style="display: none;">
+            <label for="fav-toggle-{{ room.id }}" class="fav-toggle-label"></label>
+          </form>
         </div>
         <div class="room-info">
           <span class="participants-count">

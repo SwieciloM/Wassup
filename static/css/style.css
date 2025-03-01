@@ -393,12 +393,15 @@ body {
   font-size: 1.4em;
 }
 
-.fav-toggle {
-  background: transparent;
-  border: none;
+.fav-toggle-label:before {
+  content: '☆'; /* Empty star */
   font-size: 1.4em;
   color: #ffcc00;
   cursor: pointer;
+}
+
+input:checked + .fav-toggle-label:before {
+  content: '★'; /* Filled star */
 }
 
 /* Info: participant count and owner/guest indicator */

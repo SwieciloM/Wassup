@@ -118,11 +118,13 @@ class RoomUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class RoomToogleFavouriteView(LoginRequiredMixin, View):
-    """Toggles the favourite status of a room."""
+    """Toggles the favourite status of a room for the current user."""
     def post(self, request, pk):
-        task = get_object_or_404(Room, pk=pk, owner=request.user)
-        task.is_completed = not task.is_completed
-        task.save()
+        room = get_object_or_404(Room, pk=pk)
+        if request.user in room.favorited_by.all():
+            room.favorited_by.remove(request.user)
+        else:
+            room.favorited_by.add(request.user)
         return redirect('home')
 
 
