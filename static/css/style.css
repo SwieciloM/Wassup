@@ -393,11 +393,24 @@ body {
   font-size: 1.4em;
 }
 
+.fav-toggle-form {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.fav-toggle-label {
+  display: inline-block;
+  line-height: 1;
+}
+
 .fav-toggle-label:before {
   content: '☆'; /* Empty star */
-  font-size: 1.4em;
+  font-size: 1.5em;
   color: #ffcc00;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 input:checked + .fav-toggle-label:before {
