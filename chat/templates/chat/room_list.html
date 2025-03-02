@@ -23,14 +23,17 @@
           </form>
         </div>
         <div class="room-info">
-          <span class="participants-count">
-            Participants: {{ room.guests.all|length|add:"1" }}
+          <span class="user-status">
+            User status:
           </span>
           {% if request.user == room.owner %}
-            <span class="owner-tag">(Owner)</span>
+            <span class="owner-tag">Owner</span>
           {% else %}
-            <span class="guest-tag">(Guest)</span>
+            <span class="guest-tag">Guest</span>
           {% endif %}
+          <div class="participants-count">
+            All participants: {{ room.guests.all|length|add:"1" }}
+          </div>
           <div class="last-message-info">
             {% if room.last_message_datetime %}
               Last message: {{ room.last_message_datetime|timesince }} ago

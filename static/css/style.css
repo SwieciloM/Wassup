@@ -429,7 +429,7 @@ input:checked + .fav-toggle-label:before {
 }
 
 .guest-tag {
-  color: #cccccc;
+  color: #2db526;
   margin-left: 5px;
 }
 
