@@ -66,16 +66,17 @@
         </div>
         <div class="room-info">
           <span class="participants-count">
-            Participants: {{ room.guests.all|length|add:"1" }}
+            All participants: {{ room.guests.all|length|add:"1" }}
           </span>
-          {% if request.user == room.owner %}
-            <span class="owner-tag">(Owner)</span>
-          {% endif %}
+          <div class="last-message-info">
+            {% if room.last_message_datetime %}
+              Last message: {{ room.last_message_datetime|timesince }} ago
+            {% else %}
+              No messages yet
+            {% endif %}
+          </div>
         </div>
         <div class="room-actions">
-          {% if request.user == room.owner %}
-            <button class="options-button" data-room-id="{{ room.id }}">Options</button>
-          {% endif %}
           <a href="{% url 'room' room.id %}" class="enter-room-button">Join Room</a>
         </div>
       </div>
