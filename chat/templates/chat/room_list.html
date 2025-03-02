@@ -17,7 +17,7 @@
                    id="fav-toggle-{{ room.id }}" 
                    name="toggle" 
                    onChange="this.form.submit()"
-                   {% if request.user in room.favorited_by.all %} checked {% endif %}
+                   {% if room.is_favourite %} checked {% endif %}
                    style="display: none;">
             <label for="fav-toggle-{{ room.id }}" class="fav-toggle-label"></label>
           </form>
@@ -31,6 +31,13 @@
           {% else %}
             <span class="guest-tag">(Guest)</span>
           {% endif %}
+          <div class="last-message-info">
+            {% if room.last_message_datetime %}
+              Last message: {{ room.last_message_datetime|timesince }} ago
+            {% else %}
+              No messages yet
+            {% endif %}
+          </div>
         </div>
         <div class="room-actions">
           {% if request.user == room.owner %}
