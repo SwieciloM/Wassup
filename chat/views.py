@@ -140,6 +140,24 @@ class RoomToogleFavouriteView(LoginRequiredMixin, View):
         else:
             room.favorited_by.add(request.user)
         return redirect('home')
+    
+
+class RoomLeaveView(LoginRequiredMixin, View):
+    """Removes current user from room's participants list."""
+    def post(self, request, pk):
+        room = get_object_or_404(Room, pk=pk)
+        if request.user in room.guests.all():
+            room.guests.remove(request.user)
+        if request.user == room.owner:
+            if room.guests.exists():
+                new_owner = room.guests.first()
+                room.owner = new_owner
+                room.guests.remove(new_owner)
+                room.save()
+            else:
+                room.delete()
+                return redirect('home')
+        return redirect('home')
 
 
 class RoomDeleteView(LoginRequiredMixin, DeleteView):

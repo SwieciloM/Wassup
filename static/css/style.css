@@ -433,43 +433,60 @@ input:checked + .fav-toggle-label:before {
   margin-left: 5px;
 }
 
-/* Actions at the bottom of each card */
+/* Container for room actions */
 .room-actions {
-  margin-top: 15px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
+  align-items: center;      /* Vertically center all items */
+  justify-content: center;  /* Center the whole group horizontally */
+  gap: 40px;                /* Optional: space between the groups */
+  margin-top: 15px;
 }
 
-/* Buttons style */
-.options-button,
-.leave-room-button {
-  background-color: #555555;
-  border: none;
+/* Each action cell (left, center, right) */
+.room-actions > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The "Enter Room" button in the center */
+.enter-room-button {
+  max-width: 130px;         /* Limit the width */
+  width: 100%;
+  text-align: center;
+  background-color: #4a90e2;
   color: #ffffff;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8em;
+  color: #555555;  /* Default color for icons */
+  text-decoration: none;
   cursor: pointer;
 }
 
-.options-button:hover,
-.leave-room-button:hover {
-  background-color: #777777;
+/* This rule makes sure that the inline SVGs use the parent's color */
+.icon-button svg {
+  fill: none;
+  stroke: currentColor;
+  width: 30px; 
+  height: 30px;
+  display: block; /* eliminates extra inline spacing */
 }
 
-/* Big Enter Room button */
-.enter-room-button {
-  background-color: #4a90e2;
-  color: #ffffff;
-  text-align: center;
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 1.2em;
-  flex: 1;
+/* Override the color only for the leave icon */
+.leave-icon {
+  color: rgb(180, 180, 180);
 }
 
-.enter-room-button:hover {
-  background-color: #357ABD;
+/* Override the color only for the leave icon */
+.settings-icon {
+  color: rgb(180, 180, 180);
 }

@@ -43,12 +43,22 @@
           </div>
         </div>
         <div class="room-actions">
-          {% if request.user == room.owner %}
-            <button class="options-button" data-room-id="{{ room.id }}">Options</button>
-          {% endif %}
-          <button class="leave-room-button" data-room-id="{{ room.id }}">Leave</button>
-          <a href="{% url 'room' room.id %}" class="enter-room-button">Open</a>
-        </div>
+          <div class="left-actions">
+            {% if request.user == room.owner %}
+              <a href="{% url 'room-update' room.id %}" class="icon-button settings-icon">
+                {% include "chat/icons/settings.svg" %}
+              </a>
+            {% endif %}
+          </div>
+          <div class="center-actions">
+            <a href="{% url 'room' room.id %}" class="enter-room-button">OPEN</a>
+          </div>
+          <div class="right-actions">
+            <a href="{% url 'room-leave' room.id %}" class="icon-button leave-icon">
+              {% include "chat/icons/leave.svg" %}
+            </a>
+          </div>
+        </div>        
       </div>
     {% endfor %}
   </div>
