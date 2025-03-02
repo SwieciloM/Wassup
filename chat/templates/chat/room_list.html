@@ -46,8 +46,8 @@
           {% if request.user == room.owner %}
             <button class="options-button" data-room-id="{{ room.id }}">Options</button>
           {% endif %}
-          <button class="leave-room-button" data-room-id="{{ room.id }}">Leave Room</button>
-          <a href="{% url 'room' room.id %}" class="enter-room-button">Enter Room</a>
+          <button class="leave-room-button" data-room-id="{{ room.id }}">Leave</button>
+          <a href="{% url 'room' room.id %}" class="enter-room-button">Open</a>
         </div>
       </div>
     {% endfor %}

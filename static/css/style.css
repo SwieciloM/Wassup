@@ -468,7 +468,6 @@ input:checked + .fav-toggle-label:before {
   text-decoration: none;
   font-size: 1.2em;
   flex: 1;
-  margin-top: 10px;
 }
 
 .enter-room-button:hover {
