@@ -44,8 +44,12 @@
         </div>
         <div class="room-actions">
           <div class="left-actions">
-            {% if request.user == room.owner %}
+            {% if not room.is_owner_only_editable or request.user == room.owner %}
               <a href="{% url 'room-update' room.id %}" class="icon-button settings-icon">
+                {% include "chat/icons/settings.svg" %}
+              </a>
+            {% else %}
+              <a class="icon-button settings-icon">
                 {% include "chat/icons/settings.svg" %}
               </a>
             {% endif %}

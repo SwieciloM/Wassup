@@ -467,7 +467,7 @@ input:checked + .fav-toggle-label:before {
   align-items: center;
   justify-content: center;
   font-size: 1.8em;
-  color: #555555;  /* Default color for icons */
+  color: rgb(180, 180, 180);  /* Default color for icons */
   text-decoration: none;
   cursor: pointer;
 }
@@ -481,12 +481,23 @@ input:checked + .fav-toggle-label:before {
   display: block; /* eliminates extra inline spacing */
 }
 
-/* Override the color only for the leave icon */
-.leave-icon {
-  color: rgb(180, 180, 180);
+/* When there is no href attribute, use a darker color and no pointer cursor */
+.icon-button:not([href]) {
+  color: rgb(90, 90, 90);
+  cursor: default;
 }
 
-/* Override the color only for the leave icon */
-.settings-icon {
-  color: rgb(180, 180, 180);
+/* Ensure icons without href do not change color on hover */
+.icon-button.settings-icon:not([href]):hover {
+  color: rgb(90, 90, 90);
+  cursor: default;
+}
+
+/* Hover colors: settings icon turns green, leave icon turns red */
+.icon-button.settings-icon:hover {
+  color: #66BB6A;
+}
+
+.icon-button.leave-icon:hover {
+  color: #EF5350;
 }
