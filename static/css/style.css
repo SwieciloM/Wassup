@@ -468,8 +468,13 @@ input:checked + .fav-toggle-label:before {
   justify-content: center;
   font-size: 1.8em;
   color: rgb(180, 180, 180);  /* Default color for icons */
+  transition: color 0.3s ease;
   text-decoration: none;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 /* This rule makes sure that the inline SVGs use the parent's color */
@@ -482,7 +487,7 @@ input:checked + .fav-toggle-label:before {
 }
 
 /* When there is no href attribute, use a darker color and no pointer cursor */
-.icon-button:not([href]) {
+.icon-button.settings-icon:not([href]) {
   color: rgb(90, 90, 90);
   cursor: default;
 }

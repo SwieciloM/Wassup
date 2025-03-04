@@ -140,7 +140,7 @@ class RoomToogleFavouriteView(LoginRequiredMixin, View):
         else:
             room.favorited_by.add(request.user)
         return redirect('home')
-    
+
 
 class RoomLeaveView(LoginRequiredMixin, View):
     """Removes current user from room's participants list."""
@@ -156,7 +156,6 @@ class RoomLeaveView(LoginRequiredMixin, View):
                 room.save()
             else:
                 room.delete()
-                return redirect('home')
         return redirect('home')
 
 
