@@ -456,10 +456,15 @@ input:checked + .fav-toggle-label:before {
   text-align: center;
   background-color: #4a90e2;
   color: #ffffff;
+  transition: background-color 0.3s ease;
   padding: 8px 40px;
   border-radius: 8px;
   text-decoration: none;
   font-size: 1.2em;
+}
+
+.enter-room-button:hover {
+  background-color: #3c76b9;
 }
 
 .icon-button {
