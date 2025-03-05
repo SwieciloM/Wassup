@@ -142,6 +142,15 @@ class RoomToogleFavouriteView(LoginRequiredMixin, View):
         return redirect('home')
 
 
+class RoomJoinView(LoginRequiredMixin, View):
+    """Adds current user to room's participants list."""
+    def post(self, request, pk):
+        room = get_object_or_404(Room, pk=pk)
+        if room.is_publicly_visible and request.user not in room.guests.all() and request.user != room.owner:
+            room.guests.add(request.user)
+        return redirect('home')
+
+
 class RoomLeaveView(LoginRequiredMixin, View):
     """Removes current user from room's participants list."""
     def post(self, request, pk):
