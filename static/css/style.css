@@ -451,6 +451,7 @@ input:checked + .fav-toggle-label:before {
 
 /* The "Enter Room" button in the center */
 .enter-room-button {
+  display: inline-block;
   max-width: 130px;         /* Limit the width */
   width: 100%;
   text-align: center;
@@ -461,6 +462,10 @@ input:checked + .fav-toggle-label:before {
   border-radius: 8px;
   text-decoration: none;
   font-size: 1.2em;
+  border: none;             /* Remove default button border */
+  outline: none;            /* Remove focus outline */
+  cursor: pointer;          /* Ensure pointer cursor */
+  font-family: 'RobotoVariable', sans-serif;
 }
 
 .enter-room-button:hover {

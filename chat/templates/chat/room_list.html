@@ -94,7 +94,12 @@
           </div>
         </div>
         <div class="room-actions">
-          <a href="{% url 'room' room.id %}" class="enter-room-button">Join Room</a>
+          <div class="center-actions">
+            <form method="POST" action="{% url 'room-join' room.id %}" class="join-form" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="enter-room-button">JOIN</button>
+            </form>
+          </div>
         </div>
       </div>
     {% endfor %}
