@@ -378,7 +378,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* Remove width: 100%; so the card doesn't expand to fill the grid cell */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* Header: room name and favourite toggle */
