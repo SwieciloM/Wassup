@@ -1,74 +1,78 @@
 {% extends 'base.html' %}
 
 {% block main_content %}
-<div class="rooms-header">
-  <h1>Rooms Dashboard</h1>
-  <a href="{% url 'room-create' %}" class="btn-add-room">Create New Room</a>
-</div>
 
 <!-- My Rooms Section -->
 <h2>My Rooms</h2>
-{% if my_rooms %}
-  <div class="room-grid">
-    {% for room in my_rooms %}
-      <div class="room-card">
-        <div class="room-header">
-          <h2 class="room-name">{{ room.name }}</h2>
-          <form method="POST" action="{% url 'room-toggle-favourite' room.id %}" class="fav-toggle-form">
-            {% csrf_token %}
-            <input type="checkbox" 
-                   id="fav-toggle-{{ room.id }}" 
-                   name="toggle" 
-                   onChange="this.form.submit()"
-                   {% if room.is_favourite %} checked {% endif %}
-                   style="display: none;">
-            <label for="fav-toggle-{{ room.id }}" class="fav-toggle-label"></label>
-          </form>
+<div class="room-grid">
+  {% for room in my_rooms %}
+    <div class="room-card">
+      <div class="room-header">
+        <h2 class="room-name">{{ room.name }}</h2>
+        <form method="POST" action="{% url 'room-toggle-favourite' room.id %}" class="fav-toggle-form">
+          {% csrf_token %}
+          <input type="checkbox" 
+                 id="fav-toggle-{{ room.id }}" 
+                 name="toggle" 
+                 onChange="this.form.submit()"
+                 {% if room.is_favourite %} checked {% endif %}
+                 style="display: none;">
+          <label for="fav-toggle-{{ room.id }}" class="fav-toggle-label"></label>
+        </form>
+      </div>
+      <div class="room-info">
+        <span class="user-status">Status:</span>
+        <span class="owner-tag">Owner</span>
+        <div class="participants-count">
+          Participants: {{ room.guests.all|length|add:"1" }}
         </div>
-        <div class="room-info">
-          <span class="user-status">Status:</span>
-          <span class="owner-tag">Owner</span>
-          <div class="participants-count">
-            All participants: {{ room.guests.all|length|add:"1" }}
-          </div>
-          <div class="last-message-info">
-            {% if room.last_message_datetime %}
-              Last message: {{ room.last_message_datetime|timesince }} ago
-            {% else %}
-              No messages yet
-            {% endif %}
-          </div>
-        </div>
-        <div class="room-actions">
-          <div class="left-actions">
-            {% if not room.is_owner_only_editable or request.user == room.owner %}
-              <a href="{% url 'room-update' room.id %}" class="icon-button settings-icon">
-                {% include "chat/icons/settings.svg" %}
-              </a>
-            {% else %}
-              <a class="icon-button settings-icon">
-                {% include "chat/icons/settings.svg" %}
-              </a>
-            {% endif %}
-          </div>
-          <div class="center-actions">
-            <a href="{% url 'room' room.id %}" class="enter-room-button">OPEN</a>
-          </div>
-          <div class="right-actions">
-            <form method="POST" action="{% url 'room-leave' room.id %}" class="leave-form" style="display:inline;">
-              {% csrf_token %}
-              <button type="submit" class="icon-button leave-icon">
-                {% include "chat/icons/leave.svg" %}
-              </button>
-            </form>
-          </div>
+        <div class="last-message-info">
+          {% if room.last_message_datetime %}
+            Last message: {{ room.last_message_datetime|timesince }} ago
+          {% else %}
+            No messages yet
+          {% endif %}
         </div>
       </div>
-    {% endfor %}
+      <div class="room-actions">
+        <div class="left-actions">
+          {% if not room.is_owner_only_editable or request.user == room.owner %}
+            <a href="{% url 'room-update' room.id %}" class="icon-button settings-icon">
+              {% include "chat/icons/settings.svg" %}
+            </a>
+          {% else %}
+            <a class="icon-button settings-icon">
+              {% include "chat/icons/settings.svg" %}
+            </a>
+          {% endif %}
+        </div>
+        <div class="center-actions">
+          <a href="{% url 'room' room.id %}" class="enter-room-button">OPEN</a>
+        </div>
+        <div class="right-actions">
+          <form method="POST" action="{% url 'room-leave' room.id %}" class="leave-form" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="icon-button leave-icon">
+              {% include "chat/icons/leave.svg" %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  <!-- Add New Room Card -->
+  <div class="room-card add-room-card">
+    <a href="{% url 'room-create' %}" class="add-room-link">
+      <div class="room-header">
+        <h2 class="room-name">Your new room</h2>
+      </div>
+      <div class="room-content">
+        <span class="plus-sign">+</span>
+      </div>
+    </a>
   </div>
-{% else %}
-  <p>You haven't created any rooms yet.</p>
-{% endif %}
+</div>
 
 <!-- Joined Rooms Section -->
 <h2>Joined Rooms</h2>
@@ -158,4 +162,5 @@
 {% else %}
   <p>No public rooms available.</p>
 {% endif %}
+
 {% endblock %}
