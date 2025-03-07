@@ -29,7 +29,6 @@
       {% ifchanged message.created_at|date:"d.m.Y" %}
       <div class="date-separator">{{ message.created_at|date:"d.m.Y" }}</div>
       {% endifchanged %}
-  
     
       <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
         <!-- Header: contains username and timestamp -->

@@ -12,16 +12,44 @@ from .forms import MessageForm
 
 
 class RoomListView(LoginRequiredMixin, ListView):
-    """Displays list of saved rooms for the logged-in user."""
+    """Displays categorized rooms for the logged-in user."""
     model = Room
     context_object_name = 'rooms'
 
     def get_context_data(self, **kwargs):
-        """Adds filtered rooms with last message datetime to the context."""
+        """Adds categorized rooms with last message datetime and favourite flag to the context."""
         context = super().get_context_data(**kwargs)
-        
-        # Rooms the user is connected to (owner or guest)
-        connected_rooms = Room.objects.filter(
+
+        # Rooms where the user is the owner
+        my_rooms = Room.objects.filter(
+            owner=self.request.user
+        ).annotate(
+            last_message_datetime=Max('messages__created_at'),
+            is_favourite=Case(
+                When(favorited_by=self.request.user, then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField()
+            )
+        ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
+
+        # Rooms where the user is a guest (exclude rooms where the user is also the owner)
+        joined_rooms = Room.objects.filter(
+            guests=self.request.user
+        ).exclude(
+            owner=self.request.user
+        ).annotate(
+            last_message_datetime=Max('messages__created_at'),
+            is_favourite=Case(
+                When(favorited_by=self.request.user, then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField()
+            )
+        ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
+
+        # Public rooms that the user is neither the owner nor a guest
+        public_rooms = Room.objects.filter(
+            is_publicly_visible=True
+        ).exclude(
             Q(owner=self.request.user) | Q(guests=self.request.user)
         ).annotate(
             last_message_datetime=Max('messages__created_at'),
@@ -31,20 +59,9 @@ class RoomListView(LoginRequiredMixin, ListView):
                 output_field=IntegerField()
             )
         ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
-        
-        # Public rooms that the user is not connected to
-        public_rooms = Room.objects.filter(is_publicly_visible=True).exclude(
-            id__in=connected_rooms.values_list('id', flat=True)
-        ).annotate(
-            last_message_datetime=Max('messages__created_at'),
-            is_favourite=Case(
-                When(favorited_by=self.request.user, then=Value(1)),
-                default=Value(0),
-                output_field=IntegerField()
-            )
-        ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
-        
-        context['connected_rooms'] = connected_rooms
+
+        context['my_rooms'] = my_rooms
+        context['joined_rooms'] = joined_rooms
         context['public_rooms'] = public_rooms
         return context
 
