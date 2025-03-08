@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.db.models import Q, Max, Case, When, Value, IntegerField
+from django.db.models import Q, Max, Exists, OuterRef
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -20,16 +20,15 @@ class RoomListView(LoginRequiredMixin, ListView):
         """Adds categorized rooms with last message datetime and favourite flag to the context."""
         context = super().get_context_data(**kwargs)
 
+        # Create a subquery that checks if the room is favorited by the current user
+        favourited_subquery = Room.objects.filter(pk=OuterRef('pk'), favorited_by=self.request.user)
+        
         # Rooms where the user is the owner
         my_rooms = Room.objects.filter(
             owner=self.request.user
         ).annotate(
             last_message_datetime=Max('messages__created_at'),
-            is_favourite=Case(
-                When(favorited_by=self.request.user, then=Value(1)),
-                default=Value(0),
-                output_field=IntegerField()
-            )
+            is_favourite=Exists(favourited_subquery)
         ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
 
         # Rooms where the user is a guest (exclude rooms where the user is also the owner)
@@ -39,11 +38,7 @@ class RoomListView(LoginRequiredMixin, ListView):
             owner=self.request.user
         ).annotate(
             last_message_datetime=Max('messages__created_at'),
-            is_favourite=Case(
-                When(favorited_by=self.request.user, then=Value(1)),
-                default=Value(0),
-                output_field=IntegerField()
-            )
+            is_favourite=Exists(favourited_subquery)
         ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
 
         # Public rooms that the user is neither the owner nor a guest
@@ -53,11 +48,7 @@ class RoomListView(LoginRequiredMixin, ListView):
             Q(owner=self.request.user) | Q(guests=self.request.user)
         ).annotate(
             last_message_datetime=Max('messages__created_at'),
-            is_favourite=Case(
-                When(favorited_by=self.request.user, then=Value(1)),
-                default=Value(0),
-                output_field=IntegerField()
-            )
+            is_favourite=Exists(favourited_subquery)
         ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
 
         context['my_rooms'] = my_rooms
