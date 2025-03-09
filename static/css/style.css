@@ -392,7 +392,7 @@ body {
   padding: 15px;
   color: #ffffff;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 2px dashed #4a90e2;  /* Dashed border to indicate it's an action button */
+  border: 2px dashed #969696;  /* Dashed border to indicate it's an action button */
 }
 
 .room-card:hover {
