@@ -57,14 +57,12 @@
 
   <!-- Add New Room Card -->
   <div class="room-card add-room-card">
-    <a href="{% url 'room-create' %}" class="add-room-link">
-      <div class="room-header">
-        <h2 class="room-name">Your new room</h2>
-      </div>
-      <div class="room-content">
-        <span class="plus-sign">+</span>
-      </div>
-    </a>
+    <div class="room-header">
+      <h2 class="room-name">Your new room</h2>
+    </div>
+    <div class="room-content">
+      <a href="{% url 'room-create' %}" class="plus-sign">+</a>
+    </div>
   </div>
 </div>
 

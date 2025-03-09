@@ -405,23 +405,31 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
 }
 
-/* Center the plus sign and style it prominently */
-.add-room-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
+.room-card.add-room-card .room-header {
   width: 100%;
-  height: 100%;
+  text-align: left;
 }
 
-.room-card.add-room-card .room-header {
-  margin-bottom: 10px;
+.room-card.add-room-card .room-content {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;      /* Vertically center all items */
+  justify-content: center;  /* Center the whole group horizontally */
+  width: 266px;
+  height: 104px;
 }
 
 .room-card.add-room-card .plus-sign {
-  font-size: 3em;
+  font-size: 5em;
   font-weight: bold;
   color: #4a90e2;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.room-card.add-room-card .plus-sign:hover {
+  color: #3c76b9;
 }
 
 /* Header: room name and favourite toggle */
