@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block main_content %}
 
 <!-- My Rooms Section -->
@@ -179,5 +179,8 @@
 {% else %}
   <p>No public rooms available.</p>
 {% endif %}
+
+<!-- Include the external JavaScript file -->
+<script src="{% static 'js/home.js' %}"></script>
 
 {% endblock %}
