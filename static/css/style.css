@@ -567,3 +567,22 @@ input:checked + .fav-toggle-label:before {
 .icon-button.leave-icon:hover {
   color: #EF5350;
 }
+
+.category-header {
+  margin: 20px 0;               /* Spacing above/below each category */
+  border-bottom: 1px solid #ccc; /* Horizontal line across full width */
+}
+
+/* The title box overlaps the bottom border of .category-header */
+.title-box {
+  display: inline-block;
+  background-color: #ccc;       /* Same color as the border */
+  padding: 5px 15px;
+  margin-bottom: -1px;          /* Ensures the box bottom meets the line */
+  color: #000;                  /* Black text for readability on light gray */
+}
+
+.title-box h2 {
+  margin: 0;
+  font-size: 1.2em;
+}

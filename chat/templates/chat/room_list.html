@@ -3,7 +3,11 @@
 {% block main_content %}
 
 <!-- My Rooms Section -->
-<h2>My Rooms</h2>
+<div class="category-header">
+  <div class="title-box">
+    <h2>My Rooms</h2>
+  </div>
+</div>
 <div class="room-grid">
   {% for room in my_rooms %}
     <div class="room-card">
@@ -58,7 +62,7 @@
   <!-- Add New Room Card -->
   <div class="room-card add-room-card">
     <div class="room-header">
-      <h2 class="room-name">Your new room</h2>
+      <h2 class="room-name">Create new room</h2>
     </div>
     <div class="room-content">
       <a href="{% url 'room-create' %}" class="plus-sign">+</a>
@@ -67,7 +71,11 @@
 </div>
 
 <!-- Joined Rooms Section -->
-<h2>Joined Rooms</h2>
+<div class="category-header">
+  <div class="title-box">
+    <h2>Joined Rooms</h2>
+  </div>
+</div>
 {% if joined_rooms %}
   <div class="room-grid">
     {% for room in joined_rooms %}
@@ -133,7 +141,11 @@
 {% endif %}
 
 <!-- Public Rooms Section -->
-<h2>Public Rooms</h2>
+<div class="category-header">
+  <div class="title-box">
+    <h2>Public Rooms</h2>
+  </div>
+</div>
 {% if public_rooms %}
   <div class="room-grid">
     {% for room in public_rooms %}
