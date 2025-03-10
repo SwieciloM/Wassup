@@ -165,6 +165,8 @@ class RoomLeaveView(LoginRequiredMixin, View):
         room = get_object_or_404(Room, pk=pk)
         if request.user in room.guests.all():
             room.guests.remove(request.user)
+        if request.user in room.favorited_by.all():
+            room.favorited_by.remove(request.user)
         if request.user == room.owner:
             if room.guests.exists():
                 new_owner = room.guests.first()
