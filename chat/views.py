@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .models import Room, Message
-from .forms import MessageForm
+from .forms import MessageForm, RoomForm
 
 
 class RoomListView(LoginRequiredMixin, ListView):
@@ -107,13 +107,13 @@ class RoomDetailView(LoginRequiredMixin, DetailView):
 class RoomCreateView(LoginRequiredMixin, CreateView):
     """Handles room creation."""
     model = Room
-    fields = ['name', 'guests', 'is_owner_only_editable', 'is_publicly_visible']
+    form_class = RoomForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         """Associates the created room with the logged-in user."""
         form.instance.owner = self.request.user
-        return super(RoomCreateView, self).form_valid(form)
+        return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
         """Adds a form type identifier to the context."""

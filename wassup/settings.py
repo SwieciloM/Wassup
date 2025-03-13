@@ -30,9 +30,11 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    # Channels dependencies
     'daphne',
     'channels',
 
+    # Django core apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # My applications
+    # Third-party apps
+    'django_select2', 
+
+    # My custom applications
     'users',
     'chat',
 ]

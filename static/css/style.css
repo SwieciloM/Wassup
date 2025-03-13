@@ -586,3 +586,8 @@ input:checked + .fav-toggle-label:before {
   margin: 0;
   font-size: 1.2em;
 }
+
+/* Make all Select2 dropdowns 300px wide */
+.select2-container {
+  width: 300px !important;  /* or set min-width, etc. */
+}
