@@ -13,7 +13,7 @@ class UserSelect2MultipleWidget(ModelSelect2MultipleWidget):
         'last_name__icontains',
     ]
     attrs = {
-        'data-width': '300px',           # or '100%' for full width
+        'data-width': '300px',           
         'data-placeholder': 'Select guests...',
     }
     # Optional: Additional attributes for controlling minimum input length, placeholders, etc.
