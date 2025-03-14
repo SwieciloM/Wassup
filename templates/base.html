@@ -7,8 +7,8 @@
     <title>Wassup</title>
     <link rel="icon" type="image/x-icon" href="{% static 'favicons/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {% block extra_head %}{% endblock %}
+    {% block extra_head %}
+    {% endblock %}
 </head>
 <body>
     <header class="navbar">
@@ -25,6 +25,9 @@
 
     <div class="content">
         {% block main_content %}
+        {% endblock %}
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+        {% block scripts %}
         {% endblock %}
     </div>
 </body>
