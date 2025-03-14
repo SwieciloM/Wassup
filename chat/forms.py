@@ -1,21 +1,13 @@
 from django import forms
-from django_select2.forms import ModelSelect2MultipleWidget
+from django_select2 import forms as s2forms
 from django.contrib.auth.models import User
 from .models import Message, Room
 
 
-class UserSelect2MultipleWidget(ModelSelect2MultipleWidget):
+class UserSelectWidget(s2forms.ModelSelect2MultipleWidget):
     """A custom widget for selecting multiple Users via django-select2 with AJAX search."""
     model = User
-    search_fields = [
-        'username__icontains',
-        'first_name__icontains',
-        'last_name__icontains',
-    ]
-    attrs = {
-        'data-width': '300px',           
-        'data-placeholder': 'Select guests...',
-    }
+    search_fields = ['username__icontains']
     # Optional: Additional attributes for controlling minimum input length, placeholders, etc.
     # attrs = {
     #     'data-minimum-input-length': 1,
@@ -27,7 +19,7 @@ class RoomForm(forms.ModelForm):
         model = Room
         fields = ['name', 'guests', 'is_owner_only_editable', 'is_publicly_visible']
         widgets = {
-            'guests': UserSelect2MultipleWidget,
+            'guests': UserSelectWidget,
         }
 
 
