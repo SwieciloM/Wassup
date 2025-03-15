@@ -121,6 +121,12 @@ class RoomCreateView(LoginRequiredMixin, CreateView):
         context['form_type'] = 'create'
         return context
 
+    def get_form_kwargs(self):
+        """Pass request to the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 class RoomUpdateView(LoginRequiredMixin, UpdateView):
     """Handles room updates."""
