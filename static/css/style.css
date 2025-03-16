@@ -587,7 +587,73 @@ input:checked + .fav-toggle-label:before {
   font-size: 1.2em;
 }
 
+/* Form styles */
+.form-wrapper {
+  max-width: 800px;
+  min-width: 500px;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.form-group .error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 3px;
+}
+
+.form-group small {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 3px;
+  color: #bbbbbb;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  background-color: #222222;
+  border: 1px solid #555555;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* Placeholder Text */
+.form-group input::placeholder {
+  color: #aaaaaa;
+}
+
 /* Make all Select2 dropdowns 300px wide */
 .select2-container {
   width: 300px !important; 
+}
+
+/* Submit Button */
+.submit-button {
+  display: block;
+  width: 300px;
+  background-color: #4a90e2;
+  border: none;
+  padding: 10px;
+  font-size: 1.2em;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #3c76b9;
 }
