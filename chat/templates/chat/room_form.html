@@ -6,7 +6,7 @@
 
 {% block main_content %}
     <div class="form-wrapper rounded">
-        <h1>New Room Creator</h1>
+        <h1>New room setup</h1>
 
         <form method="POST">
             {% csrf_token %}
@@ -36,7 +36,10 @@
 
             <div class="form-group">
                 <label>Editing rights:</label>
-                <a>{{ form.is_owner_only_editable }} Disable guest editing</a>
+                <div class="checkbox-group">
+                    {{ form.is_owner_only_editable }}
+                    <label for="{{ form.is_owner_only_editable.id_for_label }}">Disable guest editing</label>
+                </div>
                 {% if form.is_owner_only_editable.help_text %}
                     <small>{{ form.is_owner_only_editable.help_text }}</small>
                 {% endif %}
@@ -47,7 +50,10 @@
 
             <div class="form-group">
                 <label>Visibility:</label>
-                <a>{{ form.is_publicly_visible }} Make room public (any user can join)</a>
+                <div class="checkbox-group">
+                    {{ form.is_publicly_visible }}
+                    <label for="{{ form.is_publicly_visible.id_for_label }}">Make room public (any user can join)</label>
+                </div>
                 {% if form.is_publicly_visible.help_text %}
                     <small>{{ form.is_publicly_visible.help_text }}</small>
                 {% endif %}

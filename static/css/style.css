@@ -589,20 +589,30 @@ input:checked + .fav-toggle-label:before {
 
 /* Form styles */
 .form-wrapper {
-  max-width: 800px;
+  max-width: 600px;
   min-width: 500px;
   margin: 10px auto;
   padding: 10px;
 }
 
+.form-wrapper h1 {
+  font-size: 1.8em;
+  text-align: center;
+  margin: 20px;
+}
+
 .form-group {
-  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
+  font-size: 1.1em;
   font-weight: bold;
   display: block;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
+  color: #ffffff;
 }
 
 .form-group .error {
@@ -618,26 +628,63 @@ input:checked + .fav-toggle-label:before {
   color: #bbbbbb;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 8px;
-  background-color: #222222;
-  border: 1px solid #555555;
-  color: #ffffff;
-  border-radius: 5px;
+/* Fix for checkbox alignment */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between checkbox and label */
+}
+
+/* Ensure label and checkbox are inline */
+.checkbox-group label {
+  display: flex;
+  align-items: center;
   font-size: 1em;
+  font-weight: normal;
+  color: #ffffff;
+  cursor: pointer;
+  margin: 0px;
+}
+
+/* Make all Select2 dropdowns 300px wide */
+.select2-container {
+  width: 400px !important;
+  color: #aaaaaa;
+}
+
+/* Style for the checkboxes */
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 3px;
+  cursor: pointer;
+}
+
+.form-group input[type="text"] {
+  width: 400px;
+  flex: 1;
+  padding: 8px;
+  margin: 0; 
+  border: 2px solid #1c1c1c;
+  background: #ffffff;
+  outline: none;
+  color: #000000;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+/* Match Select2 dropdown with inputs */
+.select2-container .select2-selection--multiple {
+  min-height: 42px;
+  padding: 6px;
+  display: flex;
+  color: #000000;
+  align-items: center;
 }
 
 /* Placeholder Text */
 .form-group input::placeholder {
   color: #aaaaaa;
-}
-
-/* Make all Select2 dropdowns 300px wide */
-.select2-container {
-  width: 300px !important; 
 }
 
 /* Submit Button */
