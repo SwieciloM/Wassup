@@ -604,7 +604,7 @@ input:checked + .fav-toggle-label:before {
 .form-group {
   padding-left: 5px;
   padding-right: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
@@ -648,7 +648,8 @@ input:checked + .fav-toggle-label:before {
 
 /* Make all Select2 dropdowns 300px wide */
 .select2-container {
-  width: 400px !important;
+  width: 100%;
+  min-width: 400px !important;
   color: #aaaaaa;
 }
 
@@ -661,11 +662,12 @@ input:checked + .fav-toggle-label:before {
 }
 
 .form-group input[type="text"] {
-  width: 400px;
+  width: 97.3%;
+  min-width: 382px;
   flex: 1;
   padding: 8px;
   margin: 0; 
-  border: 2px solid #1c1c1c;
+  border: 1px solid #555555;
   background: #ffffff;
   outline: none;
   color: #000000;
@@ -673,32 +675,65 @@ input:checked + .fav-toggle-label:before {
   border-radius: 5px;
 }
 
-/* Match Select2 dropdown with inputs */
-.select2-container .select2-selection--multiple {
-  min-height: 42px;
-  padding: 6px;
-  display: flex;
-  color: #000000;
-  align-items: center;
-}
-
-/* Placeholder Text */
 .form-group input::placeholder {
-  color: #aaaaaa;
+  color: #7b7b7b;
 }
 
-/* Submit Button */
+/* Match Select2 dropdown with normal input styles */
+.select2-container .select2-selection--multiple,
+.select2-container .select2-selection--single {
+    background-color: #222222; /* Match text input background */
+    color: #2b2b2b; /* Text color */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1em;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    height: 36px;
+}
+
+.select2-container .select2-search__field {
+  height: 20px;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+  margin-top: 0px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  padding: 0px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__clear {
+  margin-top: 0px !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  margin-top: 0px !important;
+}
+
+/* Dropdown menu */
+.select2-container--default .select2-dropdown {
+    background-color: #ffffff; /* Dark background for dropdown */
+    border: 1px solid #555555;
+    color: #4c4c4c;
+}
+
+/* The "Enter Room" button in the center */
 .submit-button {
   display: block;
-  width: 300px;
+  max-width: 160px;
+  width: 100%;
+  padding: 8px 40px;
   background-color: #4a90e2;
-  border: none;
-  padding: 10px;
+  color: #fff;
   font-size: 1.2em;
-  color: white;
-  border-radius: 5px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  margin: 20px auto; /* Centers the button */
+  transition: background-color 0.3s;
+  font-family: 'RobotoVariable', sans-serif;
 }
 
 .submit-button:hover {

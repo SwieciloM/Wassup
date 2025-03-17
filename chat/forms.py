@@ -42,6 +42,9 @@ class RoomForm(forms.ModelForm):
         model = Room
         fields = ['name', 'guests', 'is_owner_only_editable', 'is_publicly_visible']
         widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': "Type room name..."
+            }),
             'guests': UserSelectWidget,
         }
 
