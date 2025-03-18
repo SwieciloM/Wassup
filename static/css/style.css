@@ -110,7 +110,7 @@ body {
 
 .edit-room {
   position: absolute;
-  top: 15px;
+  top: 11px;
   right: 30px;
   background-color: transparent;
   font-size: 1.8em;
@@ -126,7 +126,7 @@ body {
 .return-room {
   position: absolute;
   left: 30px;
-  top: 15px;
+  top: 13px;
   background-color: transparent;
   font-size: 1.8em;
   font-weight: bold;
@@ -595,10 +595,20 @@ input:checked + .fav-toggle-label:before {
   padding: 10px;
 }
 
-.form-wrapper h1 {
-  font-size: 1.8em;
+.form-header {
   text-align: center;
-  margin: 20px;
+  min-width: 500px;
+  position: relative;
+}
+
+.form-header h1 {
+  font-size: 1.8em;
+  margin: 20px 0px;
+}
+
+.form-header .return-room {
+  left: 30px;
+  top: -1px;
 }
 
 .form-group {
