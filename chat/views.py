@@ -135,8 +135,9 @@ class RoomUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('home')
 
     def get_queryset(self):
-        """Only return rooms owned by the current user."""
-        return Room.objects.filter(owner=self.request.user)
+        """Return rooms owned by the current user or in which the guest has editing rights."""
+        user = self.request.user
+        return Room.objects.filter(Q(owner=user) | Q(is_owner_only_editable=False, guests=user)).distinct()
 
     def get_context_data(self, **kwargs):
         """Adds a form type identifier to the context."""
