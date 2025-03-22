@@ -730,19 +730,43 @@ input:checked + .fav-toggle-label:before {
     color: #4c4c4c;
 }
 
-/* The "Enter Room" button in the center */
-.submit-button {
-  display: block;
-  max-width: 160px;
+.button-group {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  gap: 50px; /* Space between buttons */
+  margin: 20px;
+}
+
+/* Delete button - Red color */
+.delete-button {
+  max-width: 170px;
   width: 100%;
-  padding: 8px 40px;
+  padding: 8px 10px;
+  background-color: #e74c3c; /* Red */
+  color: #fff;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'RobotoVariable', sans-serif;
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Update button - Matches submit button */
+.submit-button {
+  max-width: 170px;
+  width: 100%;
+  padding: 8px 10px;
   background-color: #4a90e2;
   color: #fff;
   font-size: 1.2em;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin: 20px auto; /* Centers the button */
   transition: background-color 0.3s;
   font-family: 'RobotoVariable', sans-serif;
 }

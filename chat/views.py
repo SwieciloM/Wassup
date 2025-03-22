@@ -131,7 +131,7 @@ class RoomCreateView(LoginRequiredMixin, CreateView):
 class RoomUpdateView(LoginRequiredMixin, UpdateView):
     """Handles room updates."""
     model = Room
-    fields = ['name', 'guests', 'is_owner_only_editable', 'is_publicly_visible']
+    form_class = RoomForm
     success_url = reverse_lazy('home')
 
     def get_queryset(self):
@@ -143,6 +143,12 @@ class RoomUpdateView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['form_type'] = 'update'
         return context
+    
+    def get_form_kwargs(self):
+        """Pass request to the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class RoomToogleFavouriteView(LoginRequiredMixin, View):
