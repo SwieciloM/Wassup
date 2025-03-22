@@ -737,6 +737,19 @@ input:checked + .fav-toggle-label:before {
   margin: 20px;
 }
 
+.button-group .delete-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 170px;
+  width: 100%;
+  margin: 0;
+}
+
+.button-group .delete-form button {
+  width: 100%;
+}
+
 /* Delete button - Red color */
 .delete-button {
   max-width: 170px;

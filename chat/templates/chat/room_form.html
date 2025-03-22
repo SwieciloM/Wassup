@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block extra_head %}
     {{ form.media.css }}
 {% endblock %}
@@ -70,17 +72,28 @@
             </div>
 
             <div class="button-group">
-            {% if form_type == 'create' %}
-                <button type="submit" class="submit-button">CREATE ROOM</button>
-            {% else %}
-                <button type="submit" class="delete-button">DELETE ROOM</button>
-                <button type="submit" class="submit-button">UPDATE DATA</button>
-            {% endif %}
+                <button type="submit" class="submit-button">
+                    {% if form_type == 'create' %}
+                        CREATE ROOM
+                    {% else %}
+                        UPDATE DATA
+                    {% endif %}
+                </button>
             </div>
         </form>
+
+        {% if form_type == 'update' and request.user == room.owner %}
+            <div class="button-group">
+                <form method="POST" action="{% url 'room-delete' room.id %}" class="delete-form">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">DELETE ROOM</button>
+                </form>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
 {% block scripts %}
     {{ form.media.js }}
+    <script src="{% static 'js/form.js' %}"></script>
 {% endblock %}
