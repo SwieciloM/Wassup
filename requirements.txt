@@ -2,3 +2,4 @@ Django==4.2.18
 channels==4.2.0
 daphne==4.1.2
 Pillow==11.1.0
+django-select2==8.2.3
