@@ -615,7 +615,7 @@ input:checked + .fav-toggle-label:before {
 .form-group {
   padding-left: 5px;
   padding-right: 5px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .form-group label {
@@ -672,6 +672,7 @@ input:checked + .fav-toggle-label:before {
   cursor: pointer;
 }
 
+.form-group input[type="password"],
 .form-group input[type="text"] {
   width: 97.3%;
   min-width: 382px;
@@ -786,4 +787,42 @@ input:checked + .fav-toggle-label:before {
 
 .submit-button:hover {
   background-color: #3c76b9;
+}
+
+.form-group small ul {
+  margin-bottom: 0;
+}
+
+.no-account-message {
+  text-align: center;
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+.no-account-message a {
+  color: #e2c14a; /* Or any color you prefer */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.no-account-message a:hover {
+  color: #b79310; /* Darker shade on hover */
+}
+
+.already-account-message {
+  text-align: center;
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+.already-account-message a {
+  color: #30c830;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.already-account-message a:hover {
+  color: #0a980a;
 }
