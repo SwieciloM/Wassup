@@ -9,19 +9,25 @@ class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         max_length=20,
         required=True,
-        widget=forms.TextInput(),
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Enter unique nickname...'
+        }),
         help_text="20 characters or fewer. Letters, digits, and @/./+/-/_ only."
     )
     password1 = forms.CharField(
         max_length=100,
         required=True,
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Enter strong password...'
+        }),
         help_text=password_validation.password_validators_help_text_html()
     )
     password2 = forms.CharField(
         max_length=100,
         required=True,
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Enter strong password again...'
+        }),
         help_text="Enter the same password as before, for verification."
     )
 
