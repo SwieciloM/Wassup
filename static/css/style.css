@@ -43,6 +43,16 @@ body {
   margin: 0;
 }
 
+.navbar-left h1 a {
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: text-shadow 0.5s ease-out;
+}
+
+.navbar-left h1 a:hover {
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
 .navbar-right {
   display: flex;
   align-items: center;
