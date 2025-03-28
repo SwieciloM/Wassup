@@ -9,7 +9,7 @@
 {% block main_content %}
     <div class="form-wrapper rounded">
         <div class="form-header">
-            <a href="{% url 'home' %}" class="return-room">&#8617;</a>
+            <a href="javascript:history.back()" class="return-room">&#8617;</a>
             {% if form_type == 'create' %}
                 <h1>New room setup</h1>
             {% else %}
