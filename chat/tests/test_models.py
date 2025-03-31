@@ -108,7 +108,7 @@ class TestMessageModel(TestCase):
         self.assertEqual(message.sender, self.user1)
         self.assertEqual(message.content, "Hello, world!")
         self.assertIsNotNone(message.created_at)
-        self.assertIsNone(message.image)
+        self.assertFalse(message.image)
 
     def test_valid_message_with_image(self):
         """Test creating a valid message with an image."""
@@ -124,7 +124,7 @@ class TestMessageModel(TestCase):
         self.assertEqual(message.room, self.room)
         self.assertEqual(message.sender, self.user1)
         self.assertIsNone(message.content)
-        self.assertIsNotNone(message.image)
+        self.assertTrue(message.image)
 
     def test_invalid_message_without_content_or_image(self):
         """Test that a message cannot be saved without either content or an image."""
