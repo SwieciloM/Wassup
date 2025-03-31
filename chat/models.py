@@ -28,7 +28,7 @@ class Message(models.Model):
     room = models.ForeignKey("Room", on_delete=models.CASCADE, related_name="messages")
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_messages")
     content = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='message_images/', blank=True, null=True)
+    image = models.ImageField(upload_to='message_images/', blank=True, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
