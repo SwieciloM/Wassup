@@ -5,7 +5,10 @@ from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import FileResponse, Http404, HttpResponseForbidden
 from django.urls import reverse_lazy
+from django.conf import settings
+from pathlib import Path
 
 from .models import Room, Message
 from .forms import MessageForm, RoomForm
@@ -200,3 +203,28 @@ class RoomDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         """Only return rooms owned by the current user."""
         return Room.objects.filter(owner=self.request.user)
+
+
+class ProtectedMediaView(LoginRequiredMixin, View):
+    """Serves the message image file for authorized users."""
+
+    def get(self, request, message_id):
+        message = get_object_or_404(Message, pk=message_id)
+
+        # Check membership: user must be the owner or in the guests
+        room = message.room
+        if request.user != room.owner and request.user not in room.guests.all():
+            return HttpResponseForbidden("You do not have permission to access this resource.")
+
+        # Make sure the message actually has an image
+        if not message.image:
+            raise Http404("No image associated with this message.")
+
+        # Build full filesystem path
+        relative_path = message.image.name 
+        full_path = Path(settings.MEDIA_ROOT) / relative_path
+        if not full_path.exists():
+            raise Http404("File not found on the server.")
+
+        # Return the file
+        return FileResponse(open(full_path, 'rb'))

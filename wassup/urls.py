@@ -25,5 +25,3 @@ urlpatterns = [
     path('', include('users.urls')),
     path('my-rooms/', include('chat.urls')),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

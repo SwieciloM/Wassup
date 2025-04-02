@@ -4,6 +4,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from channels.db import database_sync_to_async
+from django.urls import reverse
+
 from .models import Room, Message
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -69,8 +71,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'timestamp': new_msg.created_at.isoformat(),
         }
         if new_msg.image:
-            # Assuming your MEDIA_URL is properly set, include the image URL.
-            response['image_url'] = new_msg.image.url
+            response['image_url'] = reverse('protected_media', kwargs={'message_id': new_msg.id})
 
         # Broadcast to the group.
         await self.channel_layer.group_send(

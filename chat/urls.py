@@ -1,5 +1,5 @@
 from django.urls import path 
-from .views import RoomListView, RoomDetailView, RoomCreateView, RoomToogleFavouriteView, RoomLeaveView, RoomUpdateView, RoomDeleteView, RoomJoinView
+from .views import RoomListView, RoomDetailView, RoomCreateView, RoomToogleFavouriteView, RoomLeaveView, RoomUpdateView, RoomDeleteView, RoomJoinView, ProtectedMediaView
 
 urlpatterns = [
     path('', RoomListView.as_view(), name='home'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('room-toggle-favourite/<int:pk>/', RoomToogleFavouriteView.as_view(), name='room-toggle-favourite'),
     path('room-leave/<int:pk>/', RoomLeaveView.as_view(), name='room-leave'),
     path('room-join/<int:pk>/', RoomJoinView.as_view(), name='room-join'),
+    path('media/<int:message_id>/', ProtectedMediaView.as_view(), name='protected_media'),
 ]
