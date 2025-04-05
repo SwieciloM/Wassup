@@ -47,10 +47,10 @@
               {% endif %}
             {% endif %}
             {% if message.image %}
-              <a href="{% url 'protected_media' message_id=message.id %}" target="_blank">
+              <a href="{% url 'protected-media' message_id=message.id %}" target="_blank">
                 <img
                   class="message-image"
-                  src="{% url 'protected_media' message_id=message.id %}"
+                  src="{% url 'protected-media' message_id=message.id %}"
                   alt="Image from {{ message.sender.username }}"
                 >
               </a>

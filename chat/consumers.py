@@ -71,7 +71,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'timestamp': new_msg.created_at.isoformat(),
         }
         if new_msg.image:
-            response['image_url'] = reverse('protected_media', kwargs={'message_id': new_msg.id})
+            response['image_url'] = reverse('protected-media', kwargs={'message_id': new_msg.id})
 
         # Broadcast to the group.
         await self.channel_layer.group_send(
