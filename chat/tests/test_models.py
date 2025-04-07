@@ -13,7 +13,7 @@ class TestRoomModel(TestCase):
         self.user2 = User.objects.create_user(username="TestUser2", password="password123")
 
     def test_valid_room_creation(self):
-        """Test creating a valid room and ensure all fields are set correctly."""
+        """Test whether a valid room can be created and all fields are set correctly."""
         room = Room.objects.create(
             name="Test Room",
             owner=self.user1,
@@ -32,7 +32,7 @@ class TestRoomModel(TestCase):
         self.assertIsNotNone(room.updated_at)
 
     def test_str_representation(self):
-        """Test the string representation of the room."""
+        """Test whether the room's __str__ method returns the expected format."""
         room = Room.objects.create(
             name="Test Room",
             owner=self.user1,
@@ -45,7 +45,7 @@ class TestRoomModel(TestCase):
         self.assertEqual(str(room), expected_str)
 
     def test_default_ordering(self):
-        """Test that rooms are ordered by creation date (newest first)."""
+        """Test whether rooms are ordered by creation date (newest first)."""
         room1 = Room.objects.create(
             name="Test Room",
             owner=self.user1,
@@ -65,7 +65,7 @@ class TestRoomModel(TestCase):
         self.assertEqual(rooms[1], room1)
 
     def test_favorited_by(self):
-        """Test the ManyToMany relationship for favorited_by field."""
+        """Test whether the 'favorited_by' ManyToMany field functions correctly."""
         room = Room.objects.create(
             name="Test Room",
             owner=self.user1,
@@ -79,7 +79,7 @@ class TestRoomModel(TestCase):
         self.assertEqual(room.favorited_by.first(), self.user2)
 
     def test_meta_verbose_name(self):
-        """Test the verbose name options for the model."""
+        """Test whether the Room model has the correct verbose names."""
         self.assertEqual(Room._meta.verbose_name, "Room")
         self.assertEqual(Room._meta.verbose_name_plural, "Rooms")
 
@@ -98,7 +98,7 @@ class TestMessageModel(TestCase):
         )
 
     def test_valid_message_creation(self):
-        """Test creating a valid message with content."""
+        """Test whether a message with text content is created successfully."""
         message = Message.objects.create(
             room=self.room,
             sender=self.user1,
@@ -111,7 +111,7 @@ class TestMessageModel(TestCase):
         self.assertFalse(message.image)
 
     def test_valid_message_with_image(self):
-        """Test creating a valid message with an image."""
+        """Test whether a message with an image is created successfully."""
         image_data = BytesIO(b"fake_image_data")
         image_data.name = "test_image.jpg"
         image_file = SimpleUploadedFile(image_data.name, image_data.getvalue())
@@ -127,7 +127,7 @@ class TestMessageModel(TestCase):
         self.assertTrue(message.image)
 
     def test_invalid_message_without_content_or_image(self):
-        """Test that a message cannot be saved without either content or an image."""
+        """Test whether creating a message fails when neither content nor image is provided."""
         with self.assertRaises(ValueError):
             Message.objects.create(
                 room=self.room,
@@ -135,7 +135,7 @@ class TestMessageModel(TestCase):
             )
 
     def test_str_representation_with_text(self):
-        """Test the string representation of a message with content."""
+        """Test whether the message's __str__ method with text content returns the expected format."""
         message = Message.objects.create(
             room=self.room,
             sender=self.user1,
@@ -145,7 +145,7 @@ class TestMessageModel(TestCase):
         self.assertEqual(str(message), expected_str)
 
     def test_str_representation_with_image(self):
-        """Test the string representation of a message with an image."""
+        """Test whether the message's __str__ method with image returns the expected format."""
         image_data = BytesIO(b"fake_image_data")
         image_data.name = "test_image.jpg"
         image_file = SimpleUploadedFile(image_data.name, image_data.getvalue())
@@ -159,7 +159,7 @@ class TestMessageModel(TestCase):
         self.assertEqual(str(message), expected_str)
 
     def test_default_ordering(self):
-        """Test that messages are ordered by creation date (newest first)."""
+        """Test whether messages are ordered by creation date (newest first)."""
         message1 = Message.objects.create(
             room=self.room,
             sender=self.user1,
@@ -177,6 +177,6 @@ class TestMessageModel(TestCase):
         self.assertEqual(messages[1], message1)
 
     def test_meta_verbose_name(self):
-        """Test the verbose name options for the Message model."""
+        """Test whether the Message model has the correct verbose names."""
         self.assertEqual(Message._meta.verbose_name, "Message")
         self.assertEqual(Message._meta.verbose_name_plural, "Messages")
