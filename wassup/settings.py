@@ -29,6 +29,7 @@ if env_file.exists():
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY', default='django-insecure-dpv3&995e!*7z%4)wgn_hff^(q0wo))1#7g-n!%am3!b$mca!^')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
 # Application definition
 INSTALLED_APPS = [
