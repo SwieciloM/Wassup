@@ -85,11 +85,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'wassup.wsgi.application'
 ASGI_APPLICATION = 'wassup.asgi.application'
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-    },
-}
+# Channel layer
+if DEBUG:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer",
+        },
+    }
+else:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [env('REDIS_URL', default='redis://localhost:6379')],
+            },
+        },
+    }
 
 # Database
 if DEBUG:
