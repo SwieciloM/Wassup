@@ -73,6 +73,8 @@ body {
   cursor: pointer;
   text-transform: uppercase;
   transition: text-shadow 0.4s ease-out;
+  font-size: 1.2em;
+  font-family: 'RobotoVariable', sans-serif;
 }
 
 .logout-button:hover {
