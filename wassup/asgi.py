@@ -8,22 +8,25 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
 """
 
 import os
+from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
-from django.core.asgi import get_asgi_application
-from chat.routing import websocket_urlpatterns
-
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wassup.settings')
 
+# Load the HTTP application
+django_asgi_app = get_asgi_application()
+
+# Import routing after Django is ready
+import django
+django.setup()
+from chat.routing import websocket_urlpatterns
+
 application = ProtocolTypeRouter({
     # Handle traditional HTTP requests with Django
-    "http": get_asgi_application(),
-
+    "http": django_asgi_app,
     # Handle WebSocket requests with Channels
     "websocket": AuthMiddlewareStack(
-        URLRouter(
-            websocket_urlpatterns
-        )
+        URLRouter(websocket_urlpatterns)
     ),
 })
