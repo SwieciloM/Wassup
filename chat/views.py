@@ -78,7 +78,7 @@ class RoomDetailView(LoginRequiredMixin, DetailView):
 
         # Fetch the 20 most recent messages; show oldest at the top
         recent_messages = room.messages.all()[:20]
-        context['messages'] = reversed(recent_messages)
+        context['messages'] = list(reversed(recent_messages))
 
         # Provide an empty form for GET requests
         context['message_form'] = MessageForm()
