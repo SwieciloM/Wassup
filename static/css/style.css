@@ -110,8 +110,8 @@ body {
 }
 
 .chat-header h1 {
-  font-size: 1.8em;
   margin: 0;
+  font-size: 1.8em;
 }
 
 .chat-header .participants {
@@ -454,6 +454,11 @@ body {
 .room-name {
   margin: 0;
   font-size: 1.4em;
+  width: 240px;
+  display: inline-block;
+  white-space: nowrap;   
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fav-toggle-form {

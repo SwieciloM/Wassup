@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Room(models.Model):
     """Model representing a chat room associated with owner."""
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=30)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owned_rooms")
     guests = models.ManyToManyField(User, blank=True, related_name="guest_rooms")
     favorited_by = models.ManyToManyField(User, blank=True, related_name="favorite_rooms")
