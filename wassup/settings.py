@@ -18,7 +18,7 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialize environ
-env = environ.Env(DEBUG=(bool, True))
+env = environ.Env(DEBUG = (bool, True))
 
 # Read the .env file if it exists
 env_file = BASE_DIR / '.env'
@@ -27,9 +27,9 @@ if env_file.exists():
 
 # Load DEBUG & SECRET_KEY & ALLOWED_HOSTS from environment (with fallback defaults)
 DEBUG = env('DEBUG')
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-dpv3&995e!*7z%4)wgn_hff^(q0wo))1#7g-n!%am3!b$mca!^')
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
-CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+SECRET_KEY = env('SECRET_KEY', default = 'django-insecure-dpv3&995e!*7z%4)wgn_hff^(q0wo))1#7g-n!%am3!b$mca!^')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default = ['*'])
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default = [])
 
 # Application definition
 INSTALLED_APPS = [
@@ -97,7 +97,7 @@ else:
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [env('REDIS_URL', default='redis://localhost:6379')],
+                "hosts": [env('REDIS_URL', default = 'redis://localhost:6379')],
             },
         },
     }
@@ -115,7 +115,7 @@ else:
     # Production - Postgres
     DATABASES = {
         'default': env.db(
-            default='postgres://user:password@localhost:5432/db_name'
+            default = 'postgres://user:password@localhost:5432/db_name'
         )
     }
 
@@ -151,7 +151,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Media files
-MEDIA_ROOT = env('MEDIA_ROOT', default=BASE_DIR/'media')
+MEDIA_ROOT = env('MEDIA_ROOT', default = BASE_DIR / 'media')
 MEDIA_URL = 'media/'
 
 # Default primary key field type
