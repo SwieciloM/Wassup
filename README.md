@@ -1,10 +1,10 @@
 <h1 align="center">Real-Time Chat App 💬  
 <br />
-<a href="https://github.com/yourusername/wassup/actions/workflows/django.yml">
-    <img src="https://github.com/yourusername/wassup/actions/workflows/django.yml/badge.svg" alt="Build Status"/>
+<a href="https://github.com/SwieciloM/Wassup/actions/workflows/django.yml">
+    <img src="https://github.com/SwieciloM/Wassup/actions/workflows/django.yml/badge.svg" alt="Build Status"/>
 </a>
-<a href="https://coveralls.io/github/yourusername/wassup?branch=main">
-    <img src="https://coveralls.io/repos/github/yourusername/wassup/badge.svg?branch=main" alt="Coverage Status"/>
+<a href="https://coveralls.io/github/SwieciloM/Wassup?branch=master">
+    <img src="https://coveralls.io/repos/github/SwieciloM/Wassup/badge.svg?branch=master" alt="Coverage Status"/>
 </a>
 <a href="https://app.codacy.com/gh/yourusername/wassup/dashboard">
     <img src="https://app.codacy.com/project/badge/Grade/yourbadgeid" alt="Codacy Badge"/>
@@ -13,7 +13,7 @@
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"/>
 </a>
 <a href="https://www.python.org/downloads/">
-    <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="Python Versions"/>
+    <img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Versions"/>
 </a>
 </h1>
 
