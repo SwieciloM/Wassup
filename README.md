@@ -7,7 +7,7 @@
     <img src="https://coveralls.io/repos/github/SwieciloM/Wassup/badge.svg?branch=master" alt="Coverage Status"/>
 </a>
 <a href="https://app.codacy.com/gh/yourusername/wassup/dashboard">
-    <img src="https://app.codacy.com/project/badge/Grade/yourbadgeid" alt="Codacy Badge"/>
+    <img src="https://app.codacy.com/project/badge/Grade/c3e457752e13403aa0db183bdd05a063" alt="Codacy Badge"/>
 </a>
 <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"/>
