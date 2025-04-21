@@ -47,28 +47,33 @@ A real-time web-based chat application built with Django and Channels. Users can
 
 ## 🧪 Local Installation (Windows)
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/yourusername/wassup.git
-cd wassup
-
-# 2. Create and activate a virtual environment
-python -m venv .venv
-.venv\Scripts\activate
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Create a .env file with at least:
-echo SECRET_KEY=your_secret_key > .env
-
-# 5. Apply migrations
-python manage.py migrate
-
-# 6. Start the development server
-python manage.py runserver
-```
-Open the application in your browser at http://127.0.0.1:8000
+1. Clone the repository
+    ```bash
+    git clone https://github.com/SwieciloM/Wassup.git
+    cd Wassup
+    ```
+2. Create and activate a virtual environment
+   ```bash
+    python -m venv .venv
+    .venv\Scripts\activate
+    ```
+3. Install dependencies
+   ```bash
+    pip install -r requirements.txt
+   ```
+4. Create a .env file with at least:
+   ```bash
+    echo SECRET_KEY=your_secret_key > .env
+   ```
+5. Apply migrations to set up the database
+   ```bash
+    python manage.py migrate
+   ```
+6. Start the development server
+   ```bash
+    python manage.py runserver
+    ```
+7. Open the application in your browser at http://127.0.0.1:8000
 
 ## 📱 Usage
 
