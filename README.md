@@ -1,4 +1,4 @@
-<h1 align="center">Real-Time Chat App 💬  
+<h1 align="center">Wassup
 <br />
 <a href="https://github.com/SwieciloM/Wassup/actions/workflows/django.yml">
     <img src="https://github.com/SwieciloM/Wassup/actions/workflows/django.yml/badge.svg" alt="Build Status"/>
@@ -17,7 +17,7 @@
 </a>
 </h1>
 
-A real-time web-based chat application built with Django and Channels. Users can register, log in, create public or private chat rooms, and exchange text and photo messages asynchronously via WebSockets. With room management, message history, and secure file access, this app offers a modern, interactive messaging experience for small communities or private groups.
+Wassup is a real-time web chat application built using django for educational purposes. Users can register, log in, create public or private chat rooms, and exchange text and photo messages asynchronously via WebSockets. With room management, message history, and secure file access, this app offers a modern, interactive messaging experience for small communities or private groups.
 
 <div align="center">
     <img src="https://github.com/user-attachments/assets/example-chat-preview.gif" width="640" height="360" />
