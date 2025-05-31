@@ -13,7 +13,8 @@ from channels.testing import WebsocketCommunicator
 from chat.consumers import ChatConsumer
 from chat.models import Room, Message
 
-# Build a reusable ASGI application for WebSocket tests.
+
+# Reusable ASGI application for WebSocket tests
 application = ProtocolTypeRouter({
     "websocket": AuthMiddlewareStack(
         URLRouter([
@@ -21,6 +22,7 @@ application = ProtocolTypeRouter({
         ])
     )
 })
+
 
 class TestChatConsumer(TransactionTestCase):
     def setUp(self):
@@ -143,7 +145,6 @@ class TestChatConsumer(TransactionTestCase):
             await communicator.disconnect()
 
         self.run_async(inner())
-        # Ensure no Message was created
         self.assertFalse(Message.objects.filter(room=room).exists())
 
     def test_anonymous_user_cannot_send(self):
@@ -164,5 +165,4 @@ class TestChatConsumer(TransactionTestCase):
             await communicator.disconnect()
 
         self.run_async(inner())
-        # Ensure no Message was created
         self.assertFalse(Message.objects.exists())

@@ -6,6 +6,7 @@ from pathlib import Path
 from django.conf import settings
 from chat.models import Room, Message
 
+
 class TestRoomListView(TestCase):
     def setUp(self):
         """Set up users and rooms to test room categorization in RoomListView."""
@@ -13,12 +14,12 @@ class TestRoomListView(TestCase):
         self.client = Client()
         self.user1 = User.objects.create_user(username="user1", password="testpass")
         self.user2 = User.objects.create_user(username="user2", password="testpass")
-        # Create a room owned by user1.
+        # Create a room owned by user1
         self.room_owned = Room.objects.create(owner=self.user1, name="Owned Room")
-        # Create a room where user1 is a guest but not owner.
+        # Create a room where user1 is a guest but not owner
         self.room_joined = Room.objects.create(owner=self.user2, name="Joined Room", is_publicly_visible=False)
         self.room_joined.guests.add(self.user1)
-        # Create a public room where user1 is neither owner nor guest.
+        # Create a public room where user1 is neither owner nor guest
         self.room_public = Room.objects.create(owner=self.user2, name="Public Room", is_publicly_visible=True)
 
     def test_room_categories_in_context(self):
@@ -47,10 +48,8 @@ class TestRoomDetailView(TestCase):
         self.other_user = User.objects.create_user(username="user2", password="testpass")
         self.room = Room.objects.create(owner=self.user, name="Test Room")
         self.room.guests.add(self.other_user)
-        # Create 25 messages; only the 20 most recent should be in the context.
         for i in range(25):
             Message.objects.create(room=self.room, sender=self.user, content=f"Test Message {i}")
-        # Refresh the room instance so that a later query sees the messages.
         self.room.refresh_from_db()
 
     def test_get_context_data(self):
@@ -61,7 +60,6 @@ class TestRoomDetailView(TestCase):
         self.assertIn('room', response.context)
         self.assertIn('messages', response.context)
         self.assertIn('message_form', response.context)
-        # Convert the iterator to a list and verify its length.
         messages = list(response.context['messages'])
         self.assertEqual(len(messages), 20,
                          f"Expected exactly 20 recent messages in context, got {len(messages)}.")
@@ -73,7 +71,6 @@ class TestRoomDetailView(TestCase):
         response = self.client.post(reverse('room', kwargs={'pk': self.room.pk}), data=post_data)
         self.assertEqual(response.status_code, 302,
                          "Expected a redirect after valid POST.")
-        # There should now be 26 messages (25 from setUp plus the new one)
         self.assertEqual(Message.objects.filter(room=self.room).count(), 26,
                          "Message count should increment by one after posting.")
 
@@ -89,7 +86,7 @@ class TestRoomCreateView(TestCase):
         self.client.login(username="creator", password="testpass")
         post_data = {
             'name': 'New Room',
-            'guests': [],  # No guests initially.
+            'guests': [], 
             'is_owner_only_editable': True,
             'is_publicly_visible': False,
         }
@@ -142,7 +139,6 @@ class TestRoomToggleFavouriteView(TestCase):
         self.client = Client()
         self.user = User.objects.create_user(username="favuser", password="testpass")
         self.room = Room.objects.create(owner=self.user, name="Fav Room")
-        # Ensure the room's favourited_by list starts empty.
         self.room.favorited_by.clear()
 
     def test_toggle_favourite_add(self):
@@ -262,14 +258,14 @@ class TestProtectedMediaView(TestCase):
         self.other = User.objects.create_user(username="other", password="testpass")
         self.room = Room.objects.create(owner=self.owner, name="Room with Image")
         self.room.guests.add(self.guest)
-        # Create a dummy image (a minimal GIF header).
+        # Create a dummy image
         self.image_content = b'\x47\x49\x46\x38\x39\x61'
         self.image_file = SimpleUploadedFile("test.gif", self.image_content, content_type="image/gif")
         self.message = Message.objects.create(
             room=self.room, sender=self.owner,
             content="Image message", image=self.image_file
         )
-        # Write a physical media file to disk.
+        # Write a physical media file to disk
         self.media_file_path = Path(settings.MEDIA_ROOT) / self.message.image.name
         self.media_file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.media_file_path, 'wb') as f:
@@ -279,7 +275,7 @@ class TestProtectedMediaView(TestCase):
         """Test that the room owner can access the protected media file."""
         self.client.login(username="owner", password="testpass")
         response = self.client.get(reverse('protected-media', kwargs={'message_id': self.message.pk}))
-        # Ensure to close the response to free the file handle.
+        # Close the response to free the file handle
         response.close()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.get('Content-Type'), 'image/gif')
@@ -300,7 +296,6 @@ class TestProtectedMediaView(TestCase):
 
     def tearDown(self):
         """Clean up the dummy media file after tests."""
-        # On Windows the file may be in use, so we catch PermissionError.
         if self.media_file_path.exists():
             try:
                 self.media_file_path.unlink()
