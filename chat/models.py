@@ -47,4 +47,3 @@ class Message(models.Model):
         ordering = ["-created_at"]
         verbose_name = "Message"
         verbose_name_plural = "Messages"
-    

@@ -15,18 +15,16 @@ from .forms import MessageForm, RoomForm
 
 
 class RoomListView(LoginRequiredMixin, ListView):
-    """Displays categorized rooms for the logged-in user."""
+    """Displays the logged-in user's rooms, joined rooms, and public rooms."""
     model = Room
     context_object_name = 'rooms'
 
     def get_context_data(self, **kwargs):
-        """Adds categorized rooms with last message datetime and favourite flag to the context."""
+        """Populate the context with categorized room lists."""
         context = super().get_context_data(**kwargs)
 
-        # Create a subquery that checks if the room is favorited by the current user
         favourited_subquery = Room.objects.filter(pk=OuterRef('pk'), favorited_by=self.request.user)
-        
-        # Rooms where the user is the owner
+
         my_rooms = Room.objects.filter(
             owner=self.request.user
         ).annotate(
@@ -34,7 +32,6 @@ class RoomListView(LoginRequiredMixin, ListView):
             is_favourite=Exists(favourited_subquery)
         ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
 
-        # Rooms where the user is a guest (exclude rooms where the user is also the owner)
         joined_rooms = Room.objects.filter(
             guests=self.request.user
         ).exclude(
@@ -44,7 +41,6 @@ class RoomListView(LoginRequiredMixin, ListView):
             is_favourite=Exists(favourited_subquery)
         ).order_by('-is_favourite', '-last_message_datetime', '-created_at').distinct()
 
-        # Public rooms that the user is neither the owner nor a guest
         public_rooms = Room.objects.filter(
             is_publicly_visible=True
         ).exclude(
@@ -61,102 +57,90 @@ class RoomListView(LoginRequiredMixin, ListView):
 
 
 class RoomDetailView(LoginRequiredMixin, DetailView):
+    """Displays room details and handles message submission."""
     model = Room
     context_object_name = 'room'
 
     def get_queryset(self):
-        """Only return lobby owned by the current user."""
+        """Restrict access to rooms the user owns or has joined."""
         return Room.objects.filter(Q(owner=self.request.user) | Q(guests=self.request.user)).distinct()
 
     def get_context_data(self, **kwargs):
-        """
-        Pass the room, the messages, and a fresh message form
-        to the template context.
-        """
+        """Add recent messages and message form to context."""
         context = super().get_context_data(**kwargs)
         room = self.object
-
-        # Fetch the 20 most recent messages; show oldest at the top
         recent_messages = room.messages.all()[:20]
         context['messages'] = list(reversed(recent_messages))
-
-        # Provide an empty form for GET requests
         context['message_form'] = MessageForm()
         return context
 
     def post(self, request, *args, **kwargs):
-        """
-        Handle creation of a new Message on POST.
-        """
-        self.object = self.get_object()  # The current Room
+        """Handle posting a new message in the room."""
+        self.object = self.get_object()
         form = MessageForm(request.POST, request.FILES)
 
         if form.is_valid():
-            # Use form.save(commit=False) so we can attach the room/sender
             new_message = form.save(commit=False)
             new_message.room = self.object
             new_message.sender = request.user
             new_message.save()
-
-            # Redirect back to the same room detail
             return redirect('room', pk=self.object.pk)
-        else:
-            # If form is invalid, re-render the page with the form errors
-            context = self.get_context_data()
-            context['message_form'] = form
-            return self.render_to_response(context)
+
+        context = self.get_context_data()
+        context['message_form'] = form
+        return self.render_to_response(context)
 
 
 class RoomCreateView(LoginRequiredMixin, CreateView):
-    """Handles room creation."""
+    """Handles creation of a new room."""
     model = Room
     form_class = RoomForm
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        """Associates the created room with the logged-in user."""
+        """Set the logged-in user as the room owner."""
         form.instance.owner = self.request.user
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
-        """Adds a form type identifier to the context."""
+        """Add form type to context."""
         context = super().get_context_data(**kwargs)
         context['form_type'] = 'create'
         return context
 
     def get_form_kwargs(self):
-        """Pass request to the form."""
+        """Pass request to the form instance."""
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
 
 class RoomUpdateView(LoginRequiredMixin, UpdateView):
-    """Handles room updates."""
+    """Handles editing existing rooms."""
     model = Room
     form_class = RoomForm
     success_url = reverse_lazy('home')
 
     def get_queryset(self):
-        """Return rooms owned by the current user or in which the guest has editing rights."""
+        """Allow edits by the owner or guests with permissions."""
         user = self.request.user
         return Room.objects.filter(Q(owner=user) | Q(is_owner_only_editable=False, guests=user)).distinct()
 
     def get_context_data(self, **kwargs):
-        """Adds a form type identifier to the context."""
+        """Add form type to context."""
         context = super().get_context_data(**kwargs)
         context['form_type'] = 'update'
         return context
-    
+
     def get_form_kwargs(self):
-        """Pass request to the form."""
+        """Pass request to the form instance."""
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
 
 class RoomToogleFavouriteView(LoginRequiredMixin, View):
-    """Toggles the favourite status of a room for the current user."""
+    """Toggles favourite status for the current user."""
     def post(self, request, pk):
         room = get_object_or_404(Room, pk=pk)
         if request.user in room.favorited_by.all():
@@ -167,7 +151,7 @@ class RoomToogleFavouriteView(LoginRequiredMixin, View):
 
 
 class RoomJoinView(LoginRequiredMixin, View):
-    """Adds current user to room's participants list."""
+    """Adds the current user to the room guests."""
     def post(self, request, pk):
         room = get_object_or_404(Room, pk=pk)
         if room.is_publicly_visible and request.user not in room.guests.all() and request.user != room.owner:
@@ -176,13 +160,16 @@ class RoomJoinView(LoginRequiredMixin, View):
 
 
 class RoomLeaveView(LoginRequiredMixin, View):
-    """Removes current user from room's participants list."""
+    """Handles leaving a room, and ownership transfer if needed."""
     def post(self, request, pk):
         room = get_object_or_404(Room, pk=pk)
+
         if request.user in room.guests.all():
             room.guests.remove(request.user)
+
         if request.user in room.favorited_by.all():
             room.favorited_by.remove(request.user)
+
         if request.user == room.owner:
             if room.guests.exists():
                 new_owner = room.guests.first()
@@ -191,40 +178,37 @@ class RoomLeaveView(LoginRequiredMixin, View):
                 room.save()
             else:
                 room.delete()
+
         return redirect('home')
 
 
 class RoomDeleteView(LoginRequiredMixin, DeleteView):
-    """Handles room deletion."""
+    """Handles deletion of a room by its owner."""
     model = Room
     context_object_name = 'room'
     success_url = reverse_lazy('home')
 
     def get_queryset(self):
-        """Only return rooms owned by the current user."""
+        """Restrict deletion to rooms owned by the user."""
         return Room.objects.filter(owner=self.request.user)
 
 
 class ProtectedMediaView(LoginRequiredMixin, View):
-    """Serves the message image file for authorized users."""
+    """Serves image files from messages to authorized users."""
 
     def get(self, request, message_id):
         message = get_object_or_404(Message, pk=message_id)
-
-        # Check membership: user must be the owner or in the guests
         room = message.room
+
+        # Access restricted to room owner or guests
         if request.user != room.owner and request.user not in room.guests.all():
             return HttpResponseForbidden("You do not have permission to access this resource.")
 
-        # Make sure the message actually has an image
         if not message.image:
             raise Http404("No image associated with this message.")
 
-        # Build full filesystem path
-        relative_path = message.image.name 
-        full_path = Path(settings.MEDIA_ROOT) / relative_path
+        full_path = Path(settings.MEDIA_ROOT) / message.image.name
         if not full_path.exists():
             raise Http404("File not found on the server.")
 
-        # Return the file
         return FileResponse(open(full_path, 'rb'))
